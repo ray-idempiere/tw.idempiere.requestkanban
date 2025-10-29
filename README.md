@@ -12,7 +12,7 @@ tw.idempiere.requestkanban 模組旨在為 iDempiere 用戶提供一個直觀、
 
 🛠️ 技術細節
 專案啟動檔案 (ZUL)
-本專案的核心介面是透過以下 ZUL 檔案啟動：
+本專案的核心介面是透過Dashboard Content 管理以下 ZUL 檔案啟動：
 
 路徑: /theme/zen/dashboard/request-kanban.zul
 
@@ -46,7 +46,7 @@ Controller 類別: tw.idempiere.requestkanban.dashboard.RequestKanbanDashboard
 使用方法
 登入 iDempiere。
 
-導航到系統中配置的、指向 /theme/zen/dashboard/request-kanban.zul 介面的選單項目（Menu Item）。
+System Tenant中,  Dashboard Content中配置並指向 /theme/zen/dashboard/request-kanban.zul。
 
 點擊該選單即可進入請求看板儀表板。
 
