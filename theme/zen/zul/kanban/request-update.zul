@@ -1,0 +1,25 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="modalDialog" title="Request History"
+		position="center,center" closable="true"
+		action="show: slideDown;hide: slideUp" border="normal"
+		 width="460px">
+
+			<vlayout>
+			<div id="requestDoc"></div>
+			<listbox id="boxUpdates" height="200px" width="100%"
+					onDrop="move(event.dragged)" droppable="true"
+					oddRowSclass="non-odd">
+					<listhead sizable="true">
+						<listheader id="listHeaderUpdate" label="Update History"
+							sort="auto" src="/theme/zen/images/EMailSupport24.png" />
+					</listhead>
+				</listbox>
+				<hlayout>				
+				<button id="zoomBtn" hflex="1" label="zoom" image="/theme/zen/images/zoom-32.png" />
+				<button id="closeBtn"  hflex="1" label="存檔離開" image="/theme/zen/images/save-32.png" />
+				</hlayout>
+
+				</vlayout>
+	</window>
+</zk>

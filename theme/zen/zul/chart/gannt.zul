@@ -1,0 +1,44 @@
+<zk xmlns:n="native">
+ <window id="HomePage" border="none" width="100%" height="100%" 
+          style="background-color:green">
+<style>
+
+</style>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+ var dataTable;
+ var chart;
+  var container;
+  var options = {
+    height:800,fontSize:5 };
+    setTimeout (function () {
+			 google.charts.load("current", {packages:["timeline"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+
+    container = document.getElementById('chartTimeline');
+    chart = new google.visualization.Timeline(container);
+    dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'string', id: 'Workshop' });
+    dataTable.addColumn({ type: 'string', id: 'Document' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+ 
+  }
+		}, 1000);
+
+function emptyDataTable(){
+	dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'string', id: 'Workshop' });
+    dataTable.addColumn({ type: 'string', id: 'Document' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+}		
+</script> 	<button id="btnRefresh" mold="os" label="Refresh"/> 
+
+ <n:div id="chartTimeline" height="800px"></n:div>
+	
+
+  </window>
+  
+</zk>

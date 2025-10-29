@@ -1,0 +1,26 @@
+<zk xmlns:n="native">
+ <window id="HomePage" border="none" width="100%" height="100%" 
+          style="background-color:green"  >
+<style>
+</style>
+<radiogroup id="scope" onCheck="choice1.value = self.selectedItem.label" />
+    <grid>
+        <rows>
+            <row>
+                              <button id="btnAddRequest" label="新增請求" image="/theme/zen/images/add-file-bw-24.png"
+                        hoverImage="/theme/zen/images/add-file-color-24.png"
+                        width="150px" />
+                <radio id="ra1" label="Private" radiogroup="scope"  checked = "true"/>
+                <radio id="ra2" label="Team" radiogroup="scope" />
+                <radio id="ra3" label="All" radiogroup="scope" />
+                  <label id="choice1" />
+
+            </row>
+        </rows>
+    </grid>
+
+          <separator orient="vertical" spacing="8px" />
+    <hlayout id="boxes" />
+  </window>
+  
+</zk>

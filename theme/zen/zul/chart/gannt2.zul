@@ -1,0 +1,63 @@
+<zk xmlns:n="native">
+ <window id="HomePage" border="none" width="100%" height="100%" 
+          style="background-color:green">
+<style>
+
+</style>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+ var dataTable;
+ var chart;
+  var container;
+  var options = {
+    height:800,fontSize:5 };
+    setTimeout (function () {
+			 google.charts.load("current", {packages:["timeline"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+
+    container = document.getElementById('chartTimeline');
+    chart = new google.visualization.Timeline(container);
+    dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'string', id: 'Workshop' });
+    dataTable.addColumn({ type: 'string', id: 'Document' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+ 
+  }
+		}, 1000);
+
+function emptyDataTable(){
+	dataTable = new google.visualization.DataTable();
+    dataTable.addColumn({ type: 'string', id: 'Workshop' });
+    dataTable.addColumn({ type: 'string', id: 'Document' });
+    dataTable.addColumn({ type: 'date', id: 'Start' });
+    dataTable.addColumn({ type: 'date', id: 'End' });
+}		
+</script> 	<button id="btnRefresh" mold="os" label="Refresh"/> 
+
+
+Start: 
+            <datebox id="db0" cols="12" format="short " onCreate="self.value = new Date()" />
+End: 
+            <datebox id="db1" cols="12" format="short " onCreate="self.value = new Date()" />            
+                        Workshop :
+                        <listbox selectedItem="@bind(vm.dateFormat)"
+                            mold="select" tabindex="8">
+                            <listitem label="Default" value="" />
+                            <listitem label="A1"
+                                value="A1" />
+                            <listitem label="B1"
+                                value="B1" />
+                            <listitem label="C1" value="C1" />
+                        </listbox>			
+QTY:<intbox value="0" width="50px"  tabindex="4" />
+<button label="更新" onClick=""
+                                width="100px" height="30px" />
+
+              <n:div id="chartTimeline" height="800px"></n:div>
+	
+
+  </window>
+  
+</zk>

@@ -1,0 +1,73 @@
+<zk xmlns:n="native">
+ <window id="HomePage" border="none" width="100%" height="100%" 
+          style="background-color:green">
+<style>
+
+</style>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+ setTimeout (function () {
+       google.charts.load('current', {packages: ['corechart', 'line']});
+		google.charts.setOnLoadCallback(drawLineStyles);	
+
+  },1000);
+
+
+var data;
+var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'Temperature'
+        },
+        colors: ['#a52714','#a52714','#FF7100','#FF7100','#097138'],
+       crosshair: {
+          color: '#000',
+          trigger: 'selection'
+        }
+      };
+       var chart;
+function drawLineStyles() {
+      data = new google.visualization.DataTable();
+      data.addColumn('string', 'X');
+      data.addColumn('number', 'H2');
+      data.addColumn('number', 'H1');
+      data.addColumn('number', 'L1');
+      data.addColumn('number', 'L2');
+      data.addColumn('number', 'Degree');
+      data.addRows([
+      
+      ]);
+      
+
+      chart = new google.visualization.LineChart(document.getElementById('linechart_div'));
+      chart.draw(data, options);
+    }
+ function emptyDataTable(){
+       data = new google.visualization.DataTable();
+
+      data.addColumn('string', 'X');
+      data.addColumn('number', 'H2');
+      data.addColumn('number', 'H1');
+      data.addColumn('number', 'L1');
+      data.addColumn('number', 'L2');
+      data.addColumn('number', 'Degree');
+}		   
+</script> 	
+
+ <n:div id="linechart_div" height="800px"></n:div>
+
+ <hbox>
+  <textbox id ="device_name" value="冷藏倉溫度24"  width="150px" tabindex="1" />
+    <calendar id="cal" onChange="dateFrom.value = cal.value" />
+    <datebox id="dateFrom" onChange="cal.value = dateFrom.value" />
+ <button id="btnRefresh" mold="os" label="Refresh"/> 
+</hbox>
+
+	
+
+  </window>
+  
+</zk>

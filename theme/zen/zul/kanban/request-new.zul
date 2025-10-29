@@ -1,0 +1,16 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="RequestNewForm" title="請求申請 (Request Form)"
+		position="center,center" closable="true"
+		action="show: slideDown;hide: slideUp" border="normal"
+		 width="460px">
+			<vlayout>
+			<div id="requestDoc"></div>
+				<hlayout>				
+				<button id="btnCancel" hflex="1" label="取消" image="/theme/zen/images/Cancel24.png" />
+				<button id="btnSave"  hflex="1" label="存檔離開" image="/theme/zen/images/Save24.png" />
+				</hlayout>
+
+				</vlayout>
+	</window>
+</zk>

@@ -1,0 +1,40 @@
+<zk xmlns:n="native">
+ <window id="HomePage" border="none" width="100%" height="100%" 
+          style="background-color:green">
+<style>
+
+</style>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+ 
+	 
+  var options;
+	  var data;	
+	   var chart;
+      function drawChart() {
+      options = {
+          width: "100%", height: "100%",
+          redFrom: 9, redTo: 9.5,
+          yellowFrom:9.5, yellowTo: 10,
+          minorTicks:0.1,
+          max:10
+        };
+        chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        
+  }
+  setTimeout (function () {
+       google.charts.load('current', {'packages':['gauge']});
+     // drawChart();
+     // google.charts.setOnLoadCallback(drawChart);
+
+  },1000);
+</script> 	
+
+ <n:div id="chart_div" height="100%"></n:div>
+ <button id="btnRefresh" mold="os" label="Refresh"/> 
+	
+
+  </window>
+  
+</zk>

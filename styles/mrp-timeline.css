@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+#xxx {
+	width: 600px;
+	height: 400px;
+	border: 1px solid lightgray;
+	postion: relative;
+}
+
+.vis-readonly {
+	background-color: rgba(255, 99, 71, 0.2);
+	border-color: darkred;
+}
+
+.processing {
+	background-color: rgba(255, 248, 211, 0.5);
+	border-color: darkred;
+}
+
+.nolot {
+	background-color: rgba(255, 99, 71, 0.2);
+	border-color: darkred;
+}
+
+.memo span {
+	font-size: 8px;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.vis-item-content span {
+	font-size: 8px;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.vis-item-content>div {
+	display: none;
+}
+
+.vis-item-content>div div {
+	font-size: 8px;
+	float: left;
+	width: 150px;
+	border: 1px solid white;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+.button-float {
+	position: fixed;
+	height: 90px;
+	width: 550px;
+	bottom: 10px;
+	right: 20px;
+	background: #EEEEEE;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust this value according to your needs */
+}

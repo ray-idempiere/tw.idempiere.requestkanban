@@ -1,0 +1,6 @@
+<zk xmlns:n="native">
+ <window id="requestkanban" border="none" width="100%" height="100%" 
+          style="background-color:green"  
+          use="tw.idempiere.requestkanban.dashboard.RequestKanbanDashboard">
+  </window>
+</zk>

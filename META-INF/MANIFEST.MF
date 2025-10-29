@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Requestkanban
+Bundle-SymbolicName: tw.idempiere.requestkanban
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Ray Lee
+Fragment-Host: org.adempiere.ui.zk;bundle-version="12.0.0"
+Automatic-Module-Name: tw.idempiere.requestkanban
+Bundle-RequiredExecutionEnvironment: JavaSE-17

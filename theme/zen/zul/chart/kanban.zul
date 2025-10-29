@@ -1,0 +1,35 @@
+<zk>
+    <style>
+    .kanbantag{
+        display:inline-block;
+        line-height: 26px;
+        height:26px;
+        border-radius: 5px;
+        padding: 0px 6px;
+        margin-bottom: 5px;
+        color: white;
+    }
+    .z-portalchildren-frame>.z-portalchildren-content .z-panel.kanbantask,.kanbantask .z-panel-body{
+        background-color: white;
+    }
+    </style>
+    <div viewModel="@id('vm')@init('demo.layout.kanban.KanbanViewModel')">
+        <portallayout orient="vertical">
+            <portalchildren title="Todo" counterVisible="true" hflex="1">
+                    <forEach items="@init(vm.todoTasks)">
+                        <apply templateURI="/widgets/layout/kanban/incl/kanbanpanel.zul" item="${each}" />
+                    </forEach>
+            </portalchildren>
+            <portalchildren title="Active" counterVisible="true"  hflex="1">
+                <forEach items="@init(vm.activeTasks)">
+                    <apply templateURI="/widgets/layout/kanban/incl/kanbanpanel.zul" item="${each}" />
+                </forEach>
+            </portalchildren>
+            <portalchildren title="Complete" counterVisible="true"  hflex="1">
+                <forEach items="@init(vm.completeTasks)">
+                    <apply templateURI="/widgets/layout/kanban/incl/kanbanpanel.zul" item="${each}" />
+                </forEach>
+            </portalchildren>
+        </portallayout>
+    </div>
+</zk>

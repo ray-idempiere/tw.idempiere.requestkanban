@@ -1,0 +1,147 @@
+<zk xmlns:n="native">
+	<window id="HomePage" border="none" width="100%" height="100%"
+		style="background-color:green" contentStyle="overflow:auto;">
+		<zscript>
+	String uuid = java.util.UUID.randomUUID().toString();
+	// Generates a UUID
+</zscript>
+		<script type="text/javascript"
+			src="/js/vis-timeline-graph2d.min.js">
+		</script>
+		<script src="/js/jquery-ui.js"></script>
+		<script src="/js/jquery.toast.js"></script>
+		<script src="/js/mrp-timeline.js?version=${uuid}"></script>
+		<style src="/styles/vis-timeline-graph2d.min.css" />
+		<style src="/styles/jquery-ui.css" />
+		<style src="/styles/jquery.toast.css" />
+		<style src="/styles/mrp-timeline.css" />
+		<n:script xmlns:n="native">
+
+		</n:script>
+		<div id="timeline-chart" height="100%"></div>
+		 <div id="loading" width="100%" class="image-container"><n:image src ="theme/zen/images/loading.gif"></n:image> </div>
+
+		<n:div class="button-float memo">
+			<hbox align="center">
+				<n:button class="item-toggle" value="view toggle">
+					View Toggle
+				</n:button>
+				<button id="btnRefresh" mold="os" label="Refresh" />
+				資源 :
+				<listbox id="resourceMode" mold="select">
+					<listitem label="workshop" value="workshop"
+						selected="true" />
+					<listitem label="barrel" value="barrel" />
+				</listbox>
+			</hbox>
+			<hbox align="center">
+				<n:span class="">圖示說明:</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-sign-document-16.png' />
+				<n:span>文件審核</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-gas-pump-16.png' />
+				<n:span>投料</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-stirring-16.png' />
+				<n:span>攪拌</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-example-16.png' />
+				<n:span>取樣</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-search-16.png' />
+				<n:span>IPQC</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-piping-16.png' />
+				<n:span>回流</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-foam-bubbles-16.png' />
+				<n:span>Bubble</n:span>
+				<n:br />
+				<n:img
+					src='/webui/theme/zen/images/icons8-barrel-16.png' />
+				<n:span>裝桶</n:span>
+				<n:br />
+
+			</hbox>
+		</n:div>
+		<n:div id="update-production-form" title="修改製令單" style="display:none;">
+			<n:form id="production-form" >
+				<div id="zk-production-form" >製令單資訊</div>
+			</n:form>
+			
+			
+		</n:div>
+
+		<!-- POST Parameter -->
+		<n:div style="display:none;">
+
+			<textbox id="productionUpdated" visible="false"></textbox>
+			<textbox id="productionDelete" visible="false"></textbox>
+			<textbox id="productionAdd" visible="false"></textbox>
+			
+			<textbox id="dateStart" visible="false" />
+			<textbox id="dateEnd" visible="false" />
+			<textbox id="dateLast" visible="false" />
+			<textbox id="group" visible="false"></textbox>
+			<textbox id="productionID" visible="false"></textbox>
+			<textbox id="itemData" visible="false"></textbox>
+			<textbox id="ipqcData" visible="false"></textbox>
+		</n:div>
+		<n:div id="ipqc-container" style="display:none;">
+			<n:form id="ipqc-form" style="display:block;">
+				<n:fieldset>
+					<n:legend>製令單資訊:</n:legend>
+
+
+					<n:label for="documentNo">單號:</n:label>
+					<n:input type="text" name="ipqc-documentno"
+						id="ipqc-documentno" readonly="true"
+						class="text ui-widget-content ui-corner-all" />
+					<n:br />
+
+					<n:label for="product">型號:</n:label>
+					<n:input type="text" name="ipqc-product"
+						id="ipqc-product" readonly="true"
+						class="text ui-widget-content ui-corner-all" />
+					<n:br />
+					<n:label for="lot">批號:</n:label>
+					<n:input type="text" name="ipqc-lot" id="ipqc-lot"
+						readonly="true" class="text ui-widget-content ui-corner-all" />
+					<n:br />
+					<n:label for="productionQty">產量:</n:label>
+					<n:input type="text" name="ipqc-qty" id="ipqc-qty"
+						readonly="true" class="text ui-widget-content ui-corner-all" />
+					<n:br />
+					<n:label for="description">特別指定要求事項</n:label>
+					<n:textarea rows="3" cols="60" name="ipqc-memo"
+						id="ipqc-memo" readonly="true"
+						class="text ui-widget-content ui-corner-all" />
+					<n:br />
+					<n:label for="ipqc-approve">IPQC 審核</n:label>
+					<n:select name="ipqc-approve" id="ipqc-approve">
+						<n:option value=""></n:option>
+						<n:option value="NGBB">回流</n:option>
+						<n:option value="NGRW">重工調整單</n:option>
+						<n:option value="NGSP">重新取樣</n:option>
+						<n:option value="NGST">重新攪拌</n:option>
+						<n:option value="OK">通過</n:option>
+
+					</n:select>
+
+					<n:input type="number" name="ipqc-production-id"
+						id="ipqc-production-id" style="display:none;" />
+					<n:input type="text" name="ipqc-action"
+						id="ipqc-action" style="display:none;" />
+				</n:fieldset>
+			</n:form>
+		</n:div>
+	</window>
+</zk>

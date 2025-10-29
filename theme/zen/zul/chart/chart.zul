@@ -1,0 +1,36 @@
+<zk xmlns:n="native">
+ <window id="HomePage" border="none" width="100%" height="100%" 
+          style="background-color:green">
+
+    <script type="text/javascript" src="/webui/js/googlechart.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['Automation',     11],
+      ['Manual',      2],
+      ['Report',  2],
+      ['Payroll', 2],
+      ['MISC',    7]
+    ]);
+
+    var options = {
+      title: 'My Daily Work Activities',
+      is3D: true,
+    };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+   
+       setTimeout (function () {
+			 chart.draw(data, options);
+		}, 5000);
+     
+  }
+</script>  
+              <n:div id="piechart_3d"></n:div>
+
+  </window>
+  
+</zk>
