@@ -5,5 +5,14 @@ Bundle-SymbolicName: tw.idempiere.requestkanban
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Ray Lee
 Fragment-Host: org.adempiere.ui.zk;bundle-version="12.0.0"
+Jetty-WarFragmentResourcePath: /
+Import-Package: org.osgi.service.cm;version="1.6.1"
 Automatic-Module-Name: tw.idempiere.requestkanban
+Bundle-ClassPath: js/,
+ src/,
+ styles/,
+ target/,
+ theme/,
+ .,
+ WEB-INF/
 Bundle-RequiredExecutionEnvironment: JavaSE-17

@@ -900,8 +900,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		currentRequest = new MRequest(Env.getCtx(), 0,null);
 		MRequestUpdate[] updates = currentRequest.getUpdates(null);
-		
-		winNewRequest = (Window)Executions.createComponents( "/theme/zen/zul/kanban/request-new.zul", boxes , null);
+
+		winNewRequest = (Window)Executions.createComponents("/theme/zen/zul/kanban/request-new.zul" , boxes , null);
 		Div requestDoc =  (Div)  winNewRequest.getFellow("requestDoc");
 		Grid grid = new Grid();
 		Rows  rows = new Rows();

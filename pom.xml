@@ -3,6 +3,12 @@
   <groupId>tw.idempiere.requestkanban</groupId>
   <artifactId>tw.idempiere.requestkanban</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+      	<parent>
+		<groupId>org.idempiere</groupId>
+		<artifactId>org.idempiere.parent</artifactId>
+		<version>${revision}</version>
+		<relativePath>../idempiere/org.idempiere.parent/pom.xml</relativePath>
+	</parent>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
