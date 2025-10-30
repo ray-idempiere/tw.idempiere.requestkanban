@@ -64,67 +64,68 @@ Contributions in any form are welcome, including but not limited to bug reports,
 This project is licensed under GPL.
 
 
-🌐 中文版 README.md
-tw.idempiere.requestkanban：iDempiere 請求看板儀表板
-一個用於 iDempiere ERP 系統的 OSGi 模組，提供一個可視化的看板（Kanban）介面來管理和追蹤請求（Requests）。
+🌐 tw.idempiere.requestkanban：iDempiere 請求看板儀表板
+一個用於 iDempiere ERP 系統 的 OSGi 模組，提供一個可視化的看板（Kanban）介面來管理和追蹤系統內的請求（Requests）。
 
-✨ 專案簡介
-tw.idempiere.requestkanban 模組旨在為 iDempiere 用戶提供一個直觀、可視化的請求管理介面。透過 Kanban 模式，使用者可以輕鬆地追蹤請求從建立到完成的整個生命週期，從而提高工作效率和團隊協作能力。
+✨ 專案簡介 (Project Overview)
+tw.idempiere.requestkanban 模組旨在為 iDempiere 用戶提供一個直觀、可視化的請求管理介面。
 
-🚀 功能特色
-請求視覺化：以卡片形式展示所有待處理的請求，一目了然。
+透過導入 Kanban 模式，使用者可以輕鬆地追蹤請求從建立到完成的整個生命週期，從而顯著提高工作效率和團隊協作能力。
 
-看板模式（Kanban）：支援拖放操作，使用者可以輕鬆地變更請求的狀態或階段。
+🚀 核心功能特色 (Features)
+請求視覺化：以可移動的卡片形式展示所有待處理的請求，使任務狀態一目了然。
+
+看板模式 (Kanban)：
+
+支援拖放操作 (Drag-and-Drop)：使用者可以輕鬆地變更請求的狀態或階段。
 
 整合 iDempiere：直接與 iDempiere 的核心請求（Request）系統無縫整合。
 
-簡潔儀表板：提供一個全屏的綠色背景儀表板介面，專注於任務管理。
+簡潔儀表板：提供一個全屏、綠色背景的儀表板介面，專注於任務管理，減少干擾。
 
-🛠️ 技術細節
+🛠️ 技術細節 (Technical Details)
 專案啟動檔案 (ZUL)
-本專案的核心介面是透過Dashboard Content 管理並指向以下 ZUL 檔案來啟動：
+本專案的核心介面是透過 Dashboard Content 視窗管理，並指向以下 ZUL 檔案來啟動：
 
-路徑: /theme/zen/dashboard/request-kanban.zul
+路徑 (Path): /theme/zen/dashboard/request-kanban.zul
 
-ZUL 檔案內容 (XML 程式碼片段):
-
-XML
-
-<zk xmlns:n="native">
- <window id="requestkanban" border="none" width="100%" height="100%" 
-          style="background-color:green"  
-          use="tw.idempiere.requestkanban.dashboard.RequestKanbanDashboard">
-  </window>
-</zk>
-關鍵類別
+關鍵類別 (Key Class)
 Controller 類別: tw.idempiere.requestkanban.dashboard.RequestKanbanDashboard
 
-此類別是 ZUL 檔案的後端控制器（Composer），負責處理業務邏輯、從 iDempiere 資料庫載入資料、以及處理看板上的互動事件。
+此類別作為 ZUL 檔案的後端控制器（Composer），負責處理業務邏輯、從 iDempiere 資料庫載入資料，以及處理看板上的互動事件。
 
-⚙️ 如何安裝與使用
-前置條件
+⚙️ 如何安裝與使用 (Installation and Usage)
+前置條件 (Prerequisites)
 已安裝並配置 iDempiere 伺服器。
 
-熟悉 iDempiere OSGi 模組的部署方式。
+熟悉 iDempiere OSGi 模組 的部署方式。
 
-安裝步驟
+安裝步驟 (Installation Steps)
 將此專案編譯成 OSGi Bundle (JAR 檔)。
 
-將編譯好的 JAR 檔部署到 iDempiere 伺服器的 felix/bundle 或指定的插件目錄。
+將編譯好的 JAR 檔 部署到 iDempiere 伺服器的 felix/bundle 或指定的插件目錄。
 
-在 iDempiere 系統管理介面中，確保 tw.idempiere.requestkanban Bundle 已啟動。
+在 iDempiere 系統管理介面 中，確保 tw.idempiere.requestkanban Bundle 已啟動 (Started)。
 
-使用方法
+使用方法 (Usage)
 登入 iDempiere。
 
-在 System Tenant 中，透過 Dashboard Content 視窗配置一個新的儀表板內容，並將其指向 /theme/zen/dashboard/request-kanban.zul。
+在 System Tenant 中，透過 Dashboard Content 視窗配置一個新的儀表板內容。
 
-將此 Dashboard Content 連結到適當的選單項目。
+將儀表板內容的設定指向：/theme/zen/dashboard/request-kanban.zul。
 
-點擊該選單即可進入請求看板儀表板。
+將此 Dashboard Content 連結到適當的選單項目 (Menu Item)。
 
-🤝 貢獻
-歡迎任何形式的貢獻，包括但不限於 Bug 回報、功能建議或程式碼提交 (Pull Requests)。
+點擊該選單，即可進入請求看板儀表板。
 
-📜 授權
+🤝 貢獻 (Contributing)
+歡迎任何形式的貢獻，包括但不限於：
+
+Bug 回報
+
+功能建議
+
+程式碼提交 (Pull Requests)
+
+📜 授權 (License)
 本專案採用 GPL 授權。
