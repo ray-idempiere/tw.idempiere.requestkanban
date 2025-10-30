@@ -1,4 +1,4 @@
-🌐 English Version README.md
+🌐 English Version
 tw.idempiere.requestkanban: iDempiere Request Kanban Dashboard
 An OSGi module for the iDempiere ERP system that provides a visual Kanban interface for managing and tracking Requests.
 
@@ -6,13 +6,13 @@ An OSGi module for the iDempiere ERP system that provides a visual Kanban interf
 The tw.idempiere.requestkanban module aims to provide iDempiere users with an intuitive, visual interface for request management. Utilizing the Kanban methodology, users can easily track the entire lifecycle of a request from creation to completion, thereby improving work efficiency and team collaboration.
 
 🚀 Features
-Request Visualization: Displays all pending requests as movable cards for quick comprehension.
+1.Request Visualization: Displays all pending requests as movable cards for quick comprehension.
 
-Kanban Mode: Supports drag-and-drop operations, allowing users to easily change the status or stage of a request.
+2.Kanban Mode: Supports drag-and-drop operations, allowing users to easily change the status or stage of a request.
 
-iDempiere Integration: Directly and seamlessly integrates with iDempiere's core Request system.
+3.iDempiere Integration: Directly and seamlessly integrates with iDempiere's core Request system.
 
-Clean Dashboard: Provides a full-screen dashboard interface with a green background, focusing purely on task management.
+4.Clean Dashboard: Provides a full-screen dashboard interface with a green background, focusing purely on task management.
 
 🛠️ Technical Details
 Project Startup File (ZUL)
@@ -37,25 +37,25 @@ This class serves as the backend controller (Composer) for the ZUL file, respons
 
 ⚙️ Installation and Usage
 Prerequisites
-iDempiere server is installed and configured.
+1.iDempiere server is installed and configured.
 
-Familiarity with deploying iDempiere OSGi modules.
+2.Familiarity with deploying iDempiere OSGi modules.
 
-Installation Steps
+3.Installation Steps
 Compile this project into an OSGi Bundle (JAR file).
 
-Deploy the compiled JAR file to the iDempiere server's felix/bundle or the designated plugin directory.
+4.Deploy the compiled JAR file to the iDempiere server's felix/bundle or the designated plugin directory.
 
-Ensure the tw.idempiere.requestkanban Bundle is started within the iDempiere System Admin interface.
+E5.nsure the tw.idempiere.requestkanban Bundle is started within the iDempiere System Admin interface.
 
 Usage
-Log in to iDempiere.
+1.Log in to iDempiere.
 
-In the System Tenant, configure a new Dashboard Content entry and point it to /theme/zen/dashboard/request-kanban.zul.
+2.In the System Tenant, configure a new Dashboard Content entry and point it to /theme/zen/dashboard/request-kanban.zul.
 
-Link this Dashboard Content to an appropriate Menu Item.
+3.Link this Dashboard Content to an appropriate Menu Item.
 
-Click the menu item to access the Request Kanban Dashboard.
+4.Click the menu item to access the Request Kanban Dashboard.
 
 🤝 Contributing
 Contributions in any form are welcome, including but not limited to bug reports, feature suggestions, or code submissions (Pull Requests).
