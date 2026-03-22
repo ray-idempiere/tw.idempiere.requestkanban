@@ -1156,38 +1156,6 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		java.sql.Timestamp endTs = rs.getTimestamp("EndTime");
 
-		Hlayout bottom = new Hlayout();
-		bottom.setHflex("1");
-		bottom.setValign("middle");
-
-		Space spacer = new Space();
-		spacer.setHflex("1");
-		bottom.appendChild(spacer);
-
-		// Right: due date chip (hidden when EndTime is null)
-		if (endTs != null) {
-		    LocalDate endDate = endTs.toLocalDateTime().toLocalDate();
-		    LocalDate today = LocalDate.now();
-		    long daysLeft = ChronoUnit.DAYS.between(today, endDate);
-		    String chipStyle;
-		    String chipText;
-		    if (daysLeft <= 0) {
-		        chipStyle = "background:#ffebe6;color:#bf2600;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;";
-		        chipText = "🔴 逾期";
-		    } else if (daysLeft <= 3) {
-		        chipStyle = "background:#fffae6;color:#7a6200;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;";
-		        chipText = "⏰ " + endDate.getMonthValue() + "/" + endDate.getDayOfMonth();
-		    } else {
-		        chipStyle = "background:#e3fcef;color:#006644;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;";
-		        chipText = "⏰ " + endDate.getMonthValue() + "/" + endDate.getDayOfMonth();
-		    }
-		    Label lblDue = new Label(chipText);
-		    lblDue.setStyle(chipStyle);
-		    bottom.appendChild(lblDue);
-		}
-
-		card.appendChild(bottom);
-
 		Hlayout lastRow = new Hlayout();
 		lastRow.setHflex("1");
 		lastRow.setValign("middle");
@@ -1198,6 +1166,27 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			Label lblStart = new Label("📅 " + ld.getYear() + "/" + ld.getMonthValue() + "/" + ld.getDayOfMonth());
 			lblStart.setStyle("font-size: 10px; color: #888;");
 			lastRow.appendChild(lblStart);
+		}
+
+		if (endTs != null) {
+		    LocalDate endDate = endTs.toLocalDateTime().toLocalDate();
+		    LocalDate today = LocalDate.now();
+		    long daysLeft = ChronoUnit.DAYS.between(today, endDate);
+		    String chipStyle;
+		    String chipText;
+		    if (daysLeft <= 0) {
+		        chipStyle = "background:#ffebe6;color:#bf2600;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;margin-left:6px;";
+		        chipText = "🔴 逾期";
+		    } else if (daysLeft <= 3) {
+		        chipStyle = "background:#fffae6;color:#7a6200;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;margin-left:6px;";
+		        chipText = "⏰ " + endDate.getMonthValue() + "/" + endDate.getDayOfMonth();
+		    } else {
+		        chipStyle = "background:#e3fcef;color:#006644;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;margin-left:6px;";
+		        chipText = "⏰ " + endDate.getMonthValue() + "/" + endDate.getDayOfMonth();
+		    }
+		    Label lblDue = new Label(chipText);
+		    lblDue.setStyle(chipStyle);
+		    lastRow.appendChild(lblDue);
 		}
 
 		Space lastSpacer = new Space();
