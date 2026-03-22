@@ -1,0 +1,16 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="winNewRequest"
+		position="center,center" closable="true"
+		action="show: slideDown;hide: slideUp" border="normal"
+		 width="460px">
+			<vlayout>
+			<div id="requestDoc"></div>
+				<hlayout>				
+				<button id="btnCancel" hflex="1" image="/images/kanban/Cancel24.png" />
+				<button id="btnSave"  hflex="1" image="/images/kanban/Save24.png" />
+				</hlayout>
+
+				</vlayout>
+	</window>
+</zk>

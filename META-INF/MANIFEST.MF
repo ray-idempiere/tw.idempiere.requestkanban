@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Requestkanban
+Bundle-SymbolicName: tw.idempiere.requestkanban
+Bundle-Version: 1.1.0.qualifier
+Bundle-Vendor: Ray Lee
+Fragment-Host: org.adempiere.ui.zk;bundle-version="12.0.0"
+Jetty-WarFragmentResourcePath: /
+Import-Package: org.osgi.framework;version="1.9.0",
+ org.osgi.service.cm;version="1.6.1",
+ org.osgi.service.event;version="1.4.0",
+ org.zkoss.zul;version="9.5.0"
+Automatic-Module-Name: tw.idempiere.requestkanban
+Bundle-ClassPath: src/,
+ images/,
+ .,
+ WEB-INF/
+Bundle-RequiredExecutionEnvironment: JavaSE-17

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adempierePackage>
+  <package name="RK_Messages" description="Request Kanban Internationalization Messages" version="1.0.0">
+    <table name="AD_Message" ad_table_id="101">
+      <row>
+        <field name="Value" type="String">RK_Requester</field>
+        <field name="MsgText" type="String">Requester:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">申請人:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Priority</field>
+        <field name="MsgText" type="String">Priority:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">優先:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Department</field>
+        <field name="MsgText" type="String">Department:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">部門:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Type</field>
+        <field name="MsgText" type="String">Type:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">類型:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_SalesRep</field>
+        <field name="MsgText" type="String">Sales Rep:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">負責人:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ResponsibleRole</field>
+        <field name="MsgText" type="String">Responsible Role/Team:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">負責職務/團隊:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_SummaryLabel</field>
+        <field name="MsgText" type="String">Request Summary</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">請求內容說明</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_SaveAndClose</field>
+        <field name="MsgText" type="String">Save and Close</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">存檔離開</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Cancel</field>
+        <field name="MsgText" type="String">Cancel</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">取消</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_SaveError</field>
+        <field name="MsgText" type="String">Save Failed!</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">存檔失敗！</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_PriorityMandatory</field>
+        <field name="MsgText" type="String">Priority cannot be empty</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">優先權不能空白</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_RequesterMandatory</field>
+        <field name="MsgText" type="String">Requester is required</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">申請人未填</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_NoUpdates</field>
+        <field name="MsgText" type="String">No updates</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">沒有更新</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_UpdateHistory</field>
+        <field name="MsgText" type="String">Update History</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">更新歷史</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_RequestFormTitle</field>
+        <field name="MsgText" type="String">Request Application</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">請求申請 (Request Form)</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_AttachmentHint</field>
+        <field name="MsgText" type="String">For attachments, right-click on the request after saving.</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">若有附件的需求，存檔後，可以在該請求文件上按右鍵，跳轉到 Window 介面上傳附件。</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_HighPriorityLimit</field>
+        <field name="MsgText" type="String">Already %1 high priority ticket(s). Limit is 1 per supervisor.</field>
+        <field name="MsgType" type="String">W</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">已有 %1 筆緊急Ticket，目前限定每位主管上限為 1 筆</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Summary</field>
+        <field name="MsgText" type="String">Summary:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">Summary:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Message</field>
+        <field name="MsgText" type="String">Message:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">Message:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Quantity</field>
+        <field name="MsgText" type="String">Quantity:</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">數量:</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Zoom</field>
+        <field name="MsgText" type="String">Zoom</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">縮放</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_TypeMandatory</field>
+        <field name="MsgText" type="String">Type is required</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">類型未選</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_TeamMandatory</field>
+        <field name="MsgText" type="String">Team is required</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">團隊未選</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_SalesRepMandatory</field>
+        <field name="MsgText" type="String">Sales Rep is required</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">負責人未選</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_DepartmentMandatory</field>
+        <field name="MsgText" type="String">Department is required</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">部門未選</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_SummaryMandatory</field>
+        <field name="MsgText" type="String">Summary is required (min 5 chars)</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">請求內容說明未填寫，至少 5 個字</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Private</field>
+        <field name="MsgText" type="String">Private</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">個人</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Subordinates</field>
+        <field name="MsgText" type="String">Subordinates</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">部屬</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Team</field>
+        <field name="MsgText" type="String">Team</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">團隊</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_All</field>
+        <field name="MsgText" type="String">All</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">全部</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_RequestKanban</field>
+        <field name="MsgText" type="String">Request Kanban</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">請求看板</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_NewRequest</field>
+        <field name="MsgText" type="String">New Request</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">新增請求</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ListView</field>
+        <field name="MsgText" type="String">List View</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">列表視圖</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_KanbanView</field>
+        <field name="MsgText" type="String">Kanban View</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">看板視圖</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_NoRequests</field>
+        <field name="MsgText" type="String">No requests in this status</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">此狀態目前沒有請求</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_StartTime</field>
+        <field name="MsgText" type="String">Start Time</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">開始時間</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_EndTime</field>
+        <field name="MsgText" type="String">End Time</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">結束時間</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_BasicInfo</field>
+        <field name="MsgText" type="String">Basic Info</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">基本資訊</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_SearchPlaceholder</field>
+        <field name="MsgText" type="String">🔍 Search summary, document no…</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">🔍 搜尋摘要、單號…</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_GanttView</field>
+        <field name="MsgText" type="String">Gantt View</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">甘特視圖</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ThisWeek</field>
+        <field name="MsgText" type="String">This Week</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">本週</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ThisMonth</field>
+        <field name="MsgText" type="String">This Month</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">本月</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ThisQuarter</field>
+        <field name="MsgText" type="String">This Quarter</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">本季</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_NoDateSet</field>
+        <field name="MsgText" type="String">No date set</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">未設定時間</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_Unassigned</field>
+        <field name="MsgText" type="String">Unassigned</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">未指派</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_InvalidDateRange</field>
+        <field name="MsgText" type="String">Start date must be before end date</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">開始日期必須早於結束日期</field></translation>
+      </row>
+    </table>
+  </package>
+</adempierePackage>
