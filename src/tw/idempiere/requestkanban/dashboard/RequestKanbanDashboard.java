@@ -1207,6 +1207,14 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		card.appendChild(bottom);
 
+		java.sql.Date startDate = rs.getDate("StartDate");
+		if (startDate != null) {
+			LocalDate ld = startDate.toLocalDate();
+			Label lblStart = new Label("📅 " + ld.getYear() + "/" + ld.getMonthValue() + "/" + ld.getDayOfMonth());
+			lblStart.setStyle("font-size: 10px; color: #888;");
+			card.appendChild(lblStart);
+		}
+
 		cell.appendChild(card);
 		item.addEventListener(Events.ON_CLICK, e -> openRequestUpdate(requestId));
 		
