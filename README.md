@@ -11,6 +11,20 @@
 
 ---
 
+## 📸 Screenshots
+
+| Kanban View | Gantt View |
+|:-----------:|:----------:|
+| ![Kanban View](docs/request-kanban.png) | ![Gantt View](docs/request-gannt.png) |
+
+| List View | Update History |
+|:---------:|:--------------:|
+| ![List View](docs/request-listview.png) | ![Update History](docs/request-update-history.png) |
+
+![Attachment Dialog](docs/request-attachment.png)
+
+---
+
 ### ✨ What Is This Thing
 
 `tw.idempiere.requestkanban` is an OSGi plugin for iDempiere 12 that replaces the ancient art of "searching the R_Request window and hoping for the best" with three glorious view modes, real-time updates, and a Gantt chart that even your PM will understand.
