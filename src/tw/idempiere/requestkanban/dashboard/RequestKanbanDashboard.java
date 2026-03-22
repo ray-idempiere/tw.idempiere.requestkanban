@@ -67,6 +67,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Cell;
 import org.zkoss.zul.Column;
 import org.zkoss.zul.Columns;
 import org.zkoss.zul.Datebox;
@@ -1115,44 +1116,19 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 	private Listitem createKanbanItem(ResultSet rs) throws SQLException {
 		int requestId = rs.getInt("R_Request_ID");
 		String summaryTxt = rs.getString("Summary");
-		String docNo = rs.getString("DocumentNo");
 		int priority = rs.getInt("Priority");
 		int attachmentCount = rs.getInt("AttachmentCount");
 
 		Listitem item = new Listitem();
 		item.setAttribute("R_Request_ID", requestId);
 		item.setDraggable("true");
-		
+
 		Listcell cell = new Listcell();
 		item.appendChild(cell);
 
 		Vlayout card = new Vlayout();
 		card.setSpacing("5px");
 		card.setStyle("padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: " + getPriorityColor(priority) + "; cursor: pointer; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);");
-		
-		Hlayout top = new Hlayout();
-		top.setHflex("1");
-		top.setValign("middle");
-		Label lblDocNo = new Label("#" + docNo);
-		lblDocNo.setStyle("font-size: 10px; color: #666; font-weight: bold;");
-		top.appendChild(lblDocNo);
-		
-		if (attachmentCount > 0) {
-			Image imgAttach = new Image("/images/kanban/Attachment24.png");
-			imgAttach.setWidth("14px");
-			imgAttach.setHeight("14px");
-			imgAttach.setStyle("margin-left: 5px;");
-			top.appendChild(imgAttach);
-		}
-		
-		top.appendChild(new Space());
-		
-		Div priorityDot = new Div();
-		priorityDot.setWidth("8px");
-		priorityDot.setHeight("8px");
-		priorityDot.setStyle("background-color: " + getPriorityDotColor(priority) + "; border-radius: 50%;");
-		top.appendChild(priorityDot);
-		card.appendChild(top);
 
 		Label lblSummary = new Label(summaryTxt);
 		lblSummary.setMultiline(true);
@@ -1161,23 +1137,28 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		card.appendChild(lblSummary);
 
 		String customer = rs.getString("Customer");
+		String responsible = rs.getString("Responsible");
+
+		Hlayout peopleRow = new Hlayout();
+		peopleRow.setHflex("1");
+		peopleRow.setValign("middle");
 		if (customer != null) {
 			Label lblCustomer = new Label("👤 " + customer);
 			lblCustomer.setStyle("font-size: 11px; color: #777;");
-			card.appendChild(lblCustomer);
+			peopleRow.appendChild(lblCustomer);
 		}
+		if (responsible != null) {
+			Label lblSalesRep = new Label("🔧 " + responsible);
+			lblSalesRep.setStyle("font-size: 11px; color: #555; margin-left: 10px;");
+			peopleRow.appendChild(lblSalesRep);
+		}
+		card.appendChild(peopleRow);
 
-		String responsible = rs.getString("Responsible");
 		java.sql.Timestamp endTs = rs.getTimestamp("EndTime");
 
 		Hlayout bottom = new Hlayout();
 		bottom.setHflex("1");
 		bottom.setValign("middle");
-
-		// Left: SalesRep name
-		Label lblSalesRep = new Label(responsible != null ? "🔧 " + responsible : "");
-		lblSalesRep.setStyle("font-size: 11px; color: #555;");
-		bottom.appendChild(lblSalesRep);
 
 		Space spacer = new Space();
 		spacer.setHflex("1");
@@ -1207,13 +1188,30 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		card.appendChild(bottom);
 
+		Hlayout lastRow = new Hlayout();
+		lastRow.setHflex("1");
+		lastRow.setValign("middle");
+
 		java.sql.Date startDate = rs.getDate("StartDate");
 		if (startDate != null) {
 			LocalDate ld = startDate.toLocalDate();
 			Label lblStart = new Label("📅 " + ld.getYear() + "/" + ld.getMonthValue() + "/" + ld.getDayOfMonth());
 			lblStart.setStyle("font-size: 10px; color: #888;");
-			card.appendChild(lblStart);
+			lastRow.appendChild(lblStart);
 		}
+
+		Space lastSpacer = new Space();
+		lastSpacer.setHflex("1");
+		lastRow.appendChild(lastSpacer);
+
+		if (attachmentCount > 0) {
+			Image imgAttach = new Image("/images/kanban/Attachment24.png");
+			imgAttach.setWidth("16px");
+			imgAttach.setHeight("16px");
+			lastRow.appendChild(imgAttach);
+		}
+
+		card.appendChild(lastRow);
 
 		cell.appendChild(card);
 		item.addEventListener(Events.ON_CLICK, e -> openRequestUpdate(requestId));
@@ -1601,15 +1599,24 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		addRow(rows, "RK_ResponsibleRole", fRole.getComponent());
 		
 		Row rowSumLabel = new Row();
-		rowSumLabel.appendChild(new Label(Msg.getMsg(Env.getCtx(), "RK_SummaryLabel")));
+		Cell sumLabelCell = new Cell();
+		sumLabelCell.setColspan(2);
+		sumLabelCell.appendChild(new Label(Msg.getMsg(Env.getCtx(), "RK_SummaryLabel")));
+		rowSumLabel.appendChild(sumLabelCell);
 		rows.appendChild(rowSumLabel);
-		
+
 		Row rowSum = new Row();
-		rowSum.appendChild(summary);
+		Cell sumCell = new Cell();
+		sumCell.setColspan(2);
+		sumCell.appendChild(summary);
+		rowSum.appendChild(sumCell);
 		rows.appendChild(rowSum);
-		
+
 		Row rowHint = new Row();
-		rowHint.appendChild(new Label(Msg.getMsg(Env.getCtx(), "RK_AttachmentHint")));
+		Cell hintCell = new Cell();
+		hintCell.setColspan(2);
+		hintCell.appendChild(new Label(Msg.getMsg(Env.getCtx(), "RK_AttachmentHint")));
+		rowHint.appendChild(hintCell);
 		rows.appendChild(rowHint);
 
 		grid.appendChild(rows);
