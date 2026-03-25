@@ -68,6 +68,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Cell;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Column;
 import org.zkoss.zul.Columns;
 import org.zkoss.zul.Datebox;
@@ -141,6 +142,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 	private Div ganttLayout;
 	private boolean ganttControlsInitialized = false;
 	private String ganttRange = "month";
+	private boolean showFinalClose = false;
+	private Checkbox chkFinalClose;
 	private LocalDate ganttFrom;
 	private LocalDate ganttTo;
 	private Datebox ganttFromBox;
@@ -236,6 +239,15 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		Space spring = new Space();
 		spring.setHflex("1");
 		topBar.appendChild(spring);
+
+		// Display Final Close checkbox (right side, before version; only shown in Gantt view)
+		chkFinalClose = new Checkbox(Msg.getMsg(Env.getCtx(), "RK_DisplayFinalClose"));
+		chkFinalClose.setVisible(false);
+		chkFinalClose.addEventListener(Events.ON_CHECK, e -> {
+			showFinalClose = chkFinalClose.isChecked();
+			refreshGantt();
+		});
+		topBar.appendChild(chkFinalClose);
 		
 		org.osgi.framework.Bundle hostBundle = FrameworkUtil.getBundle(getClass());
 		String pluginVersion = "?.?.?";
@@ -404,6 +416,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			kanbanLayout.setVisible(false);
 			listTabbox.setVisible(false);
 			ganttLayout.setVisible(true);
+			chkFinalClose.setVisible(true);
 			if (!ganttControlsInitialized) {
 				initGanttControls();
 			}
@@ -414,6 +427,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			currentView = VIEW_LIST;
 			btnToggleView.setLabel("⊞ " + Msg.getMsg(Env.getCtx(), "RK_KanbanView"));
 			ganttLayout.setVisible(false);
+			chkFinalClose.setVisible(false);
 			listTabbox.setVisible(true);
 			refreshData();
 		} else {
@@ -818,15 +832,17 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		StringBuilder sql = new StringBuilder(
 			"SELECT r.R_Request_ID, r.DocumentNo, r.Summary, r.Priority," +
-			" r.StartTime, r.EndTime, r.R_Status_ID," +
+			" r.StartTime, r.EndTime, r.CloseDate, r.R_Status_ID," +
 			" (SELECT Name FROM AD_User WHERE AD_User_ID = r.SalesRep_ID) AS Responsible," +
 			" (SELECT Name FROM AD_User WHERE AD_User_ID = r.AD_User_ID)  AS Customer" +
 			" FROM R_Request r" +
 			" WHERE r.StartDate IS NOT NULL" +
-			"   AND r.IsActive = 'Y'" +
-			"   AND EXISTS (SELECT 1 FROM R_Status WHERE R_Status_ID = r.R_Status_ID" +
-			"               AND IsFinalClose != 'Y')"
+			"   AND r.IsActive = 'Y'"
 		);
+		if (!showFinalClose) {
+			sql.append("   AND EXISTS (SELECT 1 FROM R_Status WHERE R_Status_ID = r.R_Status_ID" +
+			           "               AND IsFinalClose != 'Y')");
+		}
 
 		// Scope filter (same patterns as addOpenItem)
 		switch (ss) {
@@ -903,7 +919,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 				}
 			}
 		}
-		return new String[]{"#dfe1e6", "#555"};
+		// Status not in the non-final-close list — treat as final closed (dark gray)
+		return new String[]{"#c4c9d4", "#333"};
 	}
 
 	/** Returns the left-border color hex for the given priority string. */
@@ -1005,6 +1022,10 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			int statusId    = rs.getInt("R_Status_ID");
 			java.sql.Timestamp startTs = rs.getTimestamp("StartTime");
 			java.sql.Timestamp endTs   = rs.getTimestamp("EndTime");
+			java.sql.Date closeDate    = rs.getDate("CloseDate");
+			// Use CloseDate as fallback when EndTime is null
+			if (endTs == null && closeDate != null)
+				endTs = new java.sql.Timestamp(closeDate.getTime());
 			String responsible = rs.getString("Responsible");
 			String customer    = rs.getString("Customer");
 
@@ -1024,7 +1045,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 				}
 			}
 
-			// No-date row (both StartTime and EndTime null)
+			// No-date row (both StartTime and EndTime null, with no CloseDate fallback)
 			if (startTs == null && endTs == null) {
 				String summaryTrunc = summary != null && summary.length() > 30
 					? summary.substring(0, 30) + "…" : (summary != null ? summary : "");

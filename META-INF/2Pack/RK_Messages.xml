@@ -324,6 +324,13 @@
         <field name="EntityType" type="String">U</field>
         <translation language="zh_TW"><field name="MsgText" type="String">開始日期必須早於結束日期</field></translation>
       </row>
+      <row>
+        <field name="Value" type="String">RK_DisplayFinalClose</field>
+        <field name="MsgText" type="String">Display Final Close</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">顯示最終關閉</field></translation>
+      </row>
     </table>
   </package>
 </adempierePackage>

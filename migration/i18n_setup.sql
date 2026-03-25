@@ -49,7 +49,8 @@ FROM (VALUES
     ('RK_ThisQuarter', 'This Quarter', 'I'),
     ('RK_NoDateSet', 'No date set', 'I'),
     ('RK_Unassigned', 'Unassigned', 'I'),
-    ('RK_InvalidDateRange', 'Start date must be before end date', 'E')
+    ('RK_InvalidDateRange', 'Start date must be before end date', 'E'),
+    ('RK_DisplayFinalClose', 'Display Final Close', 'I')
 ) AS v(val, msg, type);
 
 INSERT INTO AD_Message_Trl (AD_Message_ID, AD_Language, AD_Client_ID, AD_Org_ID, IsActive, Created, CreatedBy, Updated, UpdatedBy, MsgText, MsgTip, IsTranslated)
@@ -101,5 +102,6 @@ SELECT AD_Message_ID, 'zh_TW', 0, 0, 'Y', now(), 100, now(), 100,
         WHEN 'RK_NoDateSet' THEN '未設定時間'
         WHEN 'RK_Unassigned' THEN '未指派'
         WHEN 'RK_InvalidDateRange' THEN '開始日期必須早於結束日期'
+        WHEN 'RK_DisplayFinalClose' THEN '顯示最終關閉'
     END, NULL, 'Y'
 FROM AD_Message WHERE Value LIKE 'RK_%';
