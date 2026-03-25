@@ -321,11 +321,15 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			Vlayout col = new Vlayout();
 			col.setHflex("1");
 			col.setStyle("background-color: #ebedf0; border-radius: 5px; margin-right: 15px; padding: 5px; min-width: 280px; overflow-y: auto;");
+			col.setDroppable("true");
+			col.addEventListener(Events.ON_DROP, e -> onDrop((DropEvent)e));
 			
 			Hlayout header = new Hlayout();
 			header.setHflex("1");
 			header.setValign("middle");
 			header.setStyle("padding: 5px; border-bottom: 2px solid #ddd;");
+			header.setDroppable("true");
+			header.addEventListener(Events.ON_DROP, e -> onDrop((DropEvent)e));
 			
 			Image statusIcon = getStatusIconImage(mStatus);
 			if (statusIcon != null) header.appendChild(statusIcon);
@@ -1554,6 +1558,12 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		if (evt.getTarget() instanceof Listbox) {
 			evt.getTarget().appendChild(item);
+		} else if (evt.getTarget() instanceof Hlayout) {
+			Listbox targetListbox = (Listbox) evt.getTarget().getNextSibling();
+			targetListbox.appendChild(item);
+		} else if (evt.getTarget() instanceof Vlayout) {
+			Listbox targetListbox = (Listbox) evt.getTarget().getChildren().get(1);
+			targetListbox.appendChild(item);
 		}
 		request.setR_Status_ID((int) item.getListbox().getAttribute("R_Status_ID"));
 		request.save();
