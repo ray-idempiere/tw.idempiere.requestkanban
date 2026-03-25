@@ -98,6 +98,18 @@ No new database tables. No new columns. We are guests in iDempiere's house and w
 
 ---
 
+---
+
+### 📋 History
+
+#### 2026-03-25
+- **Scrollbar fix** — Kanban columns, List tabpanels, and Gantt panel now scroll vertically when there are too many tasks. Previously the panel just grew forever with no scrollbar, which is not a feature, it is a cry for help.
+- **Gantt left list is clickable** — Clicking a row in the task list on the left side of the Gantt view now opens the Request Update dialog. Previously only the bar was clickable. The rows were jealous.
+- **Bugfix: date range picker crash** — Selecting a custom date range threw `java.lang.UnsupportedOperationException` because `java.sql.Date.toInstant()` is not supported by the JDK. Fixed by detecting `java.sql.Date` and calling `.toLocalDate()` directly.
+- **Gantt bar label** — The bar no longer shows the Document Number. It now shows `(Applicant) Start~End` (e.g., `(王育偉) 3/1~3/31`), where Applicant is the AD_User_ID (requester), not the SalesRep. DocNo and Summary are still visible in the tooltip on hover.
+
+---
+
 ### 🤝 Contributing
 
 Found a bug? Open an issue.
@@ -188,6 +200,18 @@ GPL. Share and share alike.
 5. **儀表板內容**：新增一筆儀表板內容，ZUL URL 填 `/zul/request-kanban.zul`，連結至選單項目，名稱填 `@RK_RequestKanban@` 以自動翻譯。
 
 **選用：自訂狀態 Icon** — 開啟 Request Status 視窗，找到目標狀態記錄，按右鍵 → Attachment → 上傳圖檔。下次頁面載入即生效。就這樣。我們知道你以為會更複雜。
+
+---
+
+---
+
+### 📋 更新記錄
+
+#### 2026-03-25
+- **捲軸修正** — 看板欄、列表分頁與甘特面板，在任務過多時現在會正確顯示垂直捲軸。先前面板只會無限往下長，這不是功能，這是求救訊號。
+- **甘特圖左側清單可點擊** — 點擊甘特圖左側任務清單的任一列，現在會開啟請求更新對話框。先前只有右側長條可以點。那些列一直默默地羨慕著。
+- **修正：日期區間選擇器崩潰** — 選擇自訂日期區間時會拋出 `java.lang.UnsupportedOperationException`，因為 JDK 的 `java.sql.Date.toInstant()` 方法根本不被支援。修正方式：偵測到 `java.sql.Date` 時直接呼叫 `.toLocalDate()`。
+- **甘特長條標籤** — 長條不再顯示單號，改為顯示 `（申請人）起始~結束`（例如：`(王育偉) 3/1~3/31`），申請人為 AD_User_ID（非負責人 SalesRep）。滑鼠移上去的 tooltip 仍會顯示單號與摘要。
 
 ---
 

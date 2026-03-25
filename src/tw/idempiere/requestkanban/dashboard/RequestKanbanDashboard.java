@@ -254,6 +254,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		// Kanban View Container
 		kanbanLayout = new Hlayout();
 		kanbanLayout.setHflex("1");
+		kanbanLayout.setVflex("1");
+		kanbanLayout.setSclass("rk-kanban-hlayout");
 		kanbanLayout.setStyle("overflow-x: auto; padding: 10px;");
 		root.appendChild(kanbanLayout);
 
@@ -268,6 +270,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		ganttLayout = new Div();
 		ganttLayout.setHflex("1");
 		ganttLayout.setVflex("1");
+		ganttLayout.setStyle("overflow: auto;");
 		ganttLayout.setVisible(false);
 		root.appendChild(ganttLayout);
 
@@ -317,7 +320,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 			Vlayout col = new Vlayout();
 			col.setHflex("1");
-			col.setStyle("background-color: #ebedf0; border-radius: 5px; margin-right: 15px; padding: 5px; min-width: 280px;");
+			col.setStyle("background-color: #ebedf0; border-radius: 5px; margin-right: 15px; padding: 5px; min-width: 280px; overflow-y: auto;");
 			
 			Hlayout header = new Hlayout();
 			header.setHflex("1");
@@ -368,6 +371,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			tabs.appendChild(tab);
 
 			Tabpanel panel = new Tabpanel();
+			panel.setVflex("1");
 			Listbox listbox = new Listbox();
 			listbox.setId("listbox_list_" + mStatus.getValue());
 			listbox.setHflex("1");
@@ -517,12 +521,18 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		ganttControlsInitialized = true;
 	}
 
+	private static LocalDate dateToLocalDate(java.util.Date d) {
+		if (d instanceof java.sql.Date)
+			return ((java.sql.Date) d).toLocalDate();
+		return d.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+	}
+
 	private void onGanttDateChange(Hlayout rangeBar) {
 		java.util.Date fv = ganttFromBox.getValue();
 		java.util.Date tv = ganttToBox.getValue();
 		if (fv == null || tv == null) return;
-		LocalDate from = fv.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-		LocalDate to   = tv.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+		LocalDate from = dateToLocalDate(fv);
+		LocalDate to   = dateToLocalDate(tv);
 		if (from.isAfter(to)) {
 			Clients.showNotification(
 				Msg.getMsg(Env.getCtx(), "RK_InvalidDateRange"),
@@ -990,6 +1000,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			java.sql.Timestamp startTs = rs.getTimestamp("StartTime");
 			java.sql.Timestamp endTs   = rs.getTimestamp("EndTime");
 			String responsible = rs.getString("Responsible");
+			String customer    = rs.getString("Customer");
 
 			// Group header (team mode only)
 			if (teamMode) {
@@ -1012,8 +1023,9 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 				String summaryTrunc = summary != null && summary.length() > 30
 					? summary.substring(0, 30) + "…" : (summary != null ? summary : "");
 				sb.append("<tr style=\"opacity:0.5;border-bottom:1px solid #f0f0f0;\">")
-				  .append("<td style=\"padding:6px 10px;border-right:1px solid #ddd;" +
-						  "font-size:11px;color:#333;\">")
+				  .append("<td onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
+				  .append(" style=\"padding:6px 10px;border-right:1px solid #ddd;" +
+						  "font-size:11px;color:#333;cursor:pointer;\">")
 				  .append("#").append(escHtml(docNo)).append(" — ").append(escHtml(summaryTrunc))
 				  .append("</td>")
 				  .append("<td colspan=\"").append(N).append("\"")
@@ -1042,13 +1054,23 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 			// Request name column
 			sb.append("<tr style=\"border-bottom:1px solid #f0f0f0;\">")
-			  .append("<td style=\"padding:6px 10px;border-right:1px solid #ddd;\">")
+			  .append("<td onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
+			  .append(" style=\"padding:6px 10px;border-right:1px solid #ddd;cursor:pointer;\">")
 			  .append("<div style=\"font-weight:600;color:#333;font-size:11px;\">#")
 			  .append(escHtml(docNo)).append("</div>")
 			  .append("<div style=\"color:#888;font-size:10px;white-space:nowrap;overflow:hidden;" +
 					  "text-overflow:ellipsis;max-width:140px;\">")
 			  .append(escHtml(summary != null ? summary : ""))
 			  .append("</div></td>");
+
+			// Bar label: (customer/applicant) start~end
+			java.time.format.DateTimeFormatter barFmt = java.time.format.DateTimeFormatter.ofPattern("M/d");
+			StringBuilder barLabel = new StringBuilder();
+			if (customer != null && !customer.isEmpty())
+				barLabel.append("(").append(escHtml(customer)).append(") ");
+			barLabel.append(startTs != null ? startTs.toLocalDateTime().toLocalDate().format(barFmt) : "");
+			barLabel.append("~");
+			barLabel.append(endTs   != null ? endTs.toLocalDateTime().toLocalDate().format(barFmt)   : "");
 
 			// Bar column (spans all date columns)
 			sb.append("<td colspan=\"").append(N).append("\"")
@@ -1065,7 +1087,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			  .append("display:flex;align-items:center;padding:0 6px;")
 			  .append("cursor:pointer;font-size:10px;color:").append(textColor).append(";")
 			  .append("white-space:nowrap;overflow:hidden;\">")
-			  .append(escHtml(docNo))
+			  .append(barLabel)
 			  .append("</div></td></tr>");
 
 		} while (rs.next());

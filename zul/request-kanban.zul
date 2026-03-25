@@ -1,6 +1,19 @@
 <zk xmlns:n="native">
  <n:style>
   .rk-btn-sm-icon img { width: 16px !important; height: 16px !important; vertical-align: middle; }
+  /* Kanban layout: stretch columns to fill full height */
+  .rk-kanban-hlayout {
+    display: flex !important;
+    align-items: stretch;
+  }
+  .rk-kanban-hlayout > .z-hlayout-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .rk-kanban-hlayout > .z-hlayout-inner > .z-vlayout {
+    height: 100%;
+  }
   .rk-add-card-btn {
     width: 100%;
     text-align: left;
