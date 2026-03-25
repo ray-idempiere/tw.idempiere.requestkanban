@@ -622,9 +622,11 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 					lbl.setValue(getStatusName(name) + " (" + lb.getItemCount() + ")");
 					if (lb.getItemCount() == 0) {
 						Listitem empty = new Listitem();
+						empty.setStyle("min-height: 150px;");
 						Listcell cell = new Listcell();
+						cell.setStyle("display: flex; align-items: center; justify-content: center; min-height: 150px;");
 						Label lbl2 = new Label(Msg.getMsg(Env.getCtx(), "RK_NoRequests"));
-						lbl2.setStyle("color: #aaa; font-size: 12px; padding: 16px; text-align: center;");
+						lbl2.setStyle("color: #aaa; font-size: 12px; text-align: center;");
 						cell.appendChild(lbl2);
 						empty.appendChild(cell);
 						lb.appendChild(empty);
