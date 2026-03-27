@@ -675,21 +675,46 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			if (result == null) {
 				// Scope returned no results (e.g., Subordinates with no subs)
 				ganttHtml.setContent(emptyStateHtml());
+				adjustGanttHeight();
 				return;
 			}
 			rs = result[0];
 			if (!rs.next()) {
 				ganttHtml.setContent(emptyStateHtml());
+				adjustGanttHeight();
 				return;
 			}
 			// rs is now positioned at first row — pass to buildGanttHtmlFromFirstRow
 			ganttHtml.setContent(buildGanttHtmlFromFirstRow(rs));
+			adjustGanttHeight();
 		} catch (Exception ex) {
 			ganttHtml.setContent("<div style=\"color:red;padding:20px;\">Error: "
 				+ escHtml(ex.getMessage()) + "</div>");
 		} finally {
 			DB.close(rs, pstmtHolder[0]);
 		}
+	}
+
+	/** Dynamically constrains ganttHtml height to the remaining viewport space
+	 *  so that overflow:auto creates a scrollbar instead of growing the page. */
+	private void adjustGanttHeight() {
+		if (ganttHtml == null) return;
+		String uuid = ganttHtml.getUuid();
+		Clients.evalJavaScript(
+			"(function(){" +
+			"  var el=document.getElementById('" + uuid + "');" +
+			"  if(!el)return;" +
+			"  function setH(){" +
+			"    var top=el.getBoundingClientRect().top;" +
+			"    var h=window.innerHeight-top-8;" +
+			"    if(h>100){el.style.height=h+'px';}" +
+			"  }" +
+			"  setH();" +
+			"  window.removeEventListener('resize',el._rkResizeH);" +
+			"  el._rkResizeH=setH;" +
+			"  window.addEventListener('resize',el._rkResizeH);" +
+			"})();"
+		);
 	}
 
 	private void refreshData() {
