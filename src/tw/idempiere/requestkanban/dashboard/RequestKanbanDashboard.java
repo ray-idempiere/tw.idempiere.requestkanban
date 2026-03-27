@@ -712,9 +712,9 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			"    var h=window.innerHeight-top-8;" +
 			"    if(h>100){el.style.height=h+'px';}" +
 			"  }" +
-			"  setH();" +
+			"  requestAnimationFrame(setH);" +
 			"  window.removeEventListener('resize',el._rkResizeH);" +
-			"  el._rkResizeH=setH;" +
+			"  el._rkResizeH=function(){requestAnimationFrame(setH);};" +
 			"  window.addEventListener('resize',el._rkResizeH);" +
 			"})();"
 		);
