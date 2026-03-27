@@ -526,20 +526,61 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		ganttLayout.appendChild(rangeBar);
 
-		// ── HTML chart area ──────────────────────────────────────────
+		// ── Content area: [project panel | gantt chart] ──────────────
+		Hlayout contentArea = new Hlayout();
+		contentArea.setHflex("1");
+		contentArea.setVflex("1");
+		contentArea.setSpacing("0");
+		contentArea.setStyle("overflow: hidden;");
+
+		// -- Left: project panel --
+		Vlayout projectPanel = new Vlayout();
+		projectPanel.setSpacing("4px");
+		projectPanel.setWidth("200px");
+		projectPanel.setStyle("padding: 8px; border-right: 1px solid #ddd; " +
+		                      "background: #fafafa; overflow-y: auto; flex-shrink: 0;");
+
+		Label lblProjects = new Label(Msg.getMsg(Env.getCtx(), "RK_Projects"));
+		lblProjects.setStyle("font-size: 11px; font-weight: 700; color: #555; " +
+		                     "text-transform: uppercase; letter-spacing: 0.5px;");
+		projectPanel.appendChild(lblProjects);
+
+		projectPanelHtml = new Html();
+		projectPanelHtml.setHflex("1");
+		projectPanel.appendChild(projectPanelHtml);
+
+		Button btnNewProject = new Button(Msg.getMsg(Env.getCtx(), "RK_NewProject"));
+		btnNewProject.setStyle("width: 100%; font-size: 11px; margin-top: 4px;");
+		btnNewProject.addEventListener(Events.ON_CLICK, e -> openNewProjectDialog());
+		projectPanel.appendChild(btnNewProject);
+
+		contentArea.appendChild(projectPanel);
+
+		// -- Right: gantt html --
 		ganttHtml = new Html();
 		ganttHtml.setHflex("1");
-		ganttLayout.appendChild(ganttHtml);
+		ganttHtml.setVflex("1");
+		contentArea.appendChild(ganttHtml);
 
-		// ── JS click bridge (inject once) ────────────────────────────
+		ganttLayout.appendChild(contentArea);
+
+		// ── JS bridges (inject once) ──────────────────────────────────
 		final String uuid = ganttLayout.getUuid();
 		Clients.evalJavaScript(
 			"window._zkGanttClick = function(id) {" +
 			"  zAu.send(new zk.Event(zk.Widget.$('" + uuid + "'), 'onGanttClick', id));" +
+			"};" +
+			"window._zkGanttDrop = function(e, projectId) {" +
+			"  var reqId = window._zkGanttDragging || '';" +
+			"  if (!reqId) return;" +
+			"  window._zkGanttDragging = null;" +
+			"  zAu.send(new zk.Event(zk.Widget.$('" + uuid + "'), 'onGanttDrop'," +
+			"    {requestId: reqId, projectId: projectId}));" +
 			"};"
 		);
 		ganttLayout.addEventListener("onGanttClick",
 			e -> openRequestUpdate((Integer) e.getData()));
+		ganttLayout.addEventListener("onGanttDrop", e -> onGanttDropHandler(e));
 
 		ganttControlsInitialized = true;
 	}
