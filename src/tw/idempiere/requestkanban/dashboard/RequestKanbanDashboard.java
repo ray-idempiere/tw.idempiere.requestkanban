@@ -553,8 +553,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		panelHeader.appendChild(lblProjects);
 
 		Button btnTogglePanel = new Button("◀");
-		btnTogglePanel.setStyle("min-width:18px; padding:0 3px; font-size:11px; " +
-		                        "border:none; background:transparent; cursor:pointer; color:#888;");
+		btnTogglePanel.setStyle("min-width:16px; padding:0 2px; font-size:11px; " +
+		                        "border:none; background:transparent; cursor:pointer; color:#888; flex-shrink:0;");
 		panelHeader.appendChild(btnTogglePanel);
 		projectPanel.appendChild(panelHeader);
 
@@ -573,16 +573,20 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			panelExpanded[0] = !panelExpanded[0];
 			if (panelExpanded[0]) {
 				projectPanel.setWidth("200px");
+				projectPanel.setSpacing("4px");
 				projectPanel.setStyle("padding: 8px; border-right: 1px solid #ddd; " +
 				                      "background: #fafafa; overflow-y: auto; flex-shrink: 0;");
+				panelHeader.setStyle("display:flex; align-items:center;");
 				lblProjects.setVisible(true);
 				projectPanelHtml.setVisible(true);
 				btnNewProject.setVisible(true);
 				btnTogglePanel.setLabel("◀");
 			} else {
-				projectPanel.setWidth("24px");
-				projectPanel.setStyle("padding: 4px 2px; border-right: 1px solid #ddd; " +
-				                      "background: #fafafa; overflow-y: hidden; flex-shrink: 0;");
+				projectPanel.setWidth("20px");
+				projectPanel.setSpacing("0");
+				projectPanel.setStyle("padding: 2px 0; border-right: 1px solid #ddd; " +
+				                      "background: #fafafa; overflow: hidden; flex-shrink: 0; min-width:20px;");
+				panelHeader.setStyle("display:flex; align-items:center; justify-content:center; width:20px;");
 				lblProjects.setVisible(false);
 				projectPanelHtml.setVisible(false);
 				btnNewProject.setVisible(false);
