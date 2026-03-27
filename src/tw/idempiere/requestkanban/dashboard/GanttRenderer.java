@@ -130,9 +130,11 @@ class GanttRenderer {
 		sb.append("<table style=\"width:100%;border-collapse:separate;border-spacing:0;font-size:11px;min-width:600px;\">");
 
 		// -- Header row --
-		sb.append("<thead><tr style=\"background:#fff7ed;\">");
-		sb.append("<th style=\"width:160px;padding:8px 12px;text-align:left;color:#374151;" +
-		          "font-weight:700;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -2px 0 #fed7aa;\">")
+		sb.append("<thead style=\"position:sticky;top:0;z-index:2;\">")
+		  .append("<tr style=\"background:#fff7ed;\">");
+		sb.append("<th style=\"position:sticky;left:0;z-index:3;width:160px;padding:8px 12px;" +
+		          "text-align:left;color:#374151;font-weight:700;background:#fff7ed;" +
+		          "box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -2px 0 #fed7aa;\">")
 		  .append(Msg.getMsg(ctx, "DocumentNo"))
 		  .append("</th>");
 		for (LocalDate col : cols) {
@@ -222,7 +224,8 @@ class GanttRenderer {
 				  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 				  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 				  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-				  .append(" style=\"padding:7px 12px;font-size:11px;color:#374151;cursor:grab;" +
+				  .append(" style=\"position:sticky;left:0;z-index:1;background:#fff;padding:7px 12px;" +
+				          "font-size:11px;color:#374151;cursor:grab;" +
 				          "box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
 				  .append("#").append(esc(docNo)).append(" — ").append(esc(summaryTrunc))
 				  .append("</td>")
@@ -257,7 +260,8 @@ class GanttRenderer {
 			  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 			  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 			  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-			  .append(" style=\"padding:7px 12px;cursor:grab;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
+			  .append(" style=\"position:sticky;left:0;z-index:1;background:#fff;padding:7px 12px;" +
+			          "cursor:grab;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
 			  .append("<div style=\"font-weight:600;color:#111827;font-size:11px;\">#")
 			  .append(esc(docNo)).append("</div>")
 			  .append("<div style=\"color:#6b7280;font-size:10px;white-space:nowrap;overflow:hidden;" +
