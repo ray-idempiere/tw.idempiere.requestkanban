@@ -40,8 +40,8 @@ import org.adempiere.webui.util.ServerPushTemplate;
 import org.compiere.model.MAttachment;
 import org.compiere.model.MColumn;
 import org.compiere.model.MLookup;
-import org.compiere.model.MProject;
 import org.compiere.model.MLookupFactory;
+import org.compiere.model.MProject;
 import org.compiere.model.MQuery;
 import org.compiere.model.MRequest;
 import org.compiere.model.MRequestUpdate;
@@ -1077,7 +1077,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		MRequest req = new MRequest(Env.getCtx(), requestId, null);
 		if (req.getR_Request_ID() == 0) {
 			Clients.showNotification(Msg.getMsg(Env.getCtx(), "RK_RequestNotFound"),
-				null, null, 3000);
+				Clients.NOTIFICATION_TYPE_WARNING, null, null, 3000);
 			return;
 		}
 		req.setC_Project_ID(projectId);
@@ -1275,7 +1275,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			String projectName = rs.getString("ProjectName");
 
 			// ── Project group header ──────────────────────────────────
-			int groupKey = hasProject ? projectId : 0;
+			int groupKey = hasProject ? projectId : -1;
 			if (groupKey != lastProjectId) {
 				lastProjectId = groupKey;
 				lastResponsible = null; // reset responsible grouping within each project
