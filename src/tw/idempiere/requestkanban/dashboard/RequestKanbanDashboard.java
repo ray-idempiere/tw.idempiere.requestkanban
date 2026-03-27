@@ -871,6 +871,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		StringBuilder sql = new StringBuilder("select StartTime, EndTime\n")
 				.append(",(select name from ad_user where ad_user_id = R_Request.salesrep_id ) Responsible ")
 				.append(", (select name from ad_user where ad_user_id = R_Request.ad_user_id ) Customer ")
+				.append(",AD_User_ID ")
 				.append(",Summary ")
 				.append(",DocumentNo ")
 				.append(",StartDate ")
@@ -1265,6 +1266,9 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		String summaryTxt = rs.getString("Summary");
 		int priority = rs.getInt("Priority");
 		int attachmentCount = rs.getInt("AttachmentCount");
+		int requesterId = rs.getInt("AD_User_ID");
+		int myId = Integer.parseInt(Env.getCtx().getProperty("#AD_User_ID"));
+		boolean isMyRequest = (requesterId == myId);
 
 		Listitem item = new Listitem();
 		item.setAttribute("R_Request_ID", requestId);
@@ -1275,7 +1279,13 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		Vlayout card = new Vlayout();
 		card.setSpacing("5px");
-		card.setStyle("padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: " + getPriorityColor(priority) + "; cursor: pointer; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);");
+		String cardStyle = "padding: 10px; border-radius: 8px; background-color: " + getPriorityColor(priority) + "; cursor: pointer; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);";
+		if (isMyRequest) {
+			cardStyle += " border-left: 3px solid #2563eb; background-color: #eff6ff;";
+		} else {
+			cardStyle += " border: 1px solid #ddd;";
+		}
+		card.setStyle(cardStyle);
 
 		Label lblSummary = new Label(summaryTxt);
 		lblSummary.setMultiline(true);
