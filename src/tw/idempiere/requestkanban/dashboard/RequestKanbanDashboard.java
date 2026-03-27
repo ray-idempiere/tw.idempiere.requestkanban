@@ -1096,7 +1096,6 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		win.setTitle(Msg.getMsg(Env.getCtx(), "RK_NewProject"));
 		win.setWidth("340px");
 		win.setBorder("normal");
-		win.setMode("modal");
 		win.setSizable(false);
 
 		Vlayout body = new Vlayout();
