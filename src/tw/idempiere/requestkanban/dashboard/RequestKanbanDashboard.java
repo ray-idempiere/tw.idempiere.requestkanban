@@ -169,6 +169,14 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 	protected void initForm() {
 		loadStatusConfig();
 		this.setStyle("padding: 0; margin: 0; border: none;");
+		Clients.evalJavaScript(
+			"if(!document.getElementById('rk-pulse-style')){" +
+			"  var s=document.createElement('style');" +
+			"  s.id='rk-pulse-style';" +
+			"  s.textContent='@keyframes rkBorderPulse{0%,100%{border-left-color:#2563eb}50%{border-left-color:rgba(37,99,235,0.15)}}';" +
+			"  document.head.appendChild(s);" +
+			"}"
+		);
 		
 		root = new Vlayout();
 		root.setHflex("1");
@@ -1281,7 +1289,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		card.setSpacing("5px");
 		String cardStyle = "padding: 10px; border-radius: 8px; background-color: " + getPriorityColor(priority) + "; cursor: pointer; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);";
 		if (isMyRequest) {
-			cardStyle += " border-left: 3px solid #2563eb;";
+			cardStyle += " border-left: 3px solid #2563eb; animation: rkBorderPulse 2s ease-in-out infinite;";
 		} else {
 			cardStyle += " border: 1px solid #ddd;";
 		}
