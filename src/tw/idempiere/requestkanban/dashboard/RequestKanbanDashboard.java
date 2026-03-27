@@ -600,7 +600,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		ganttHtml = new Html();
 		ganttHtml.setHflex("1");
 		ganttHtml.setVflex("1");
-		ganttHtml.setStyle("overflow: hidden; position: relative;");
+		ganttHtml.setStyle("overflow: auto;");
 		contentArea.appendChild(ganttHtml);
 
 		ganttLayout.appendChild(contentArea);
@@ -1273,7 +1273,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		// ── HTML assembly ─────────────────────────────────────────────
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div style=\"position:absolute;inset:0;overflow:auto;\">");
+		sb.append("<div style=\"min-width:600px;\">");
 		sb.append("<table style=\"width:100%;border-collapse:collapse;font-size:11px;min-width:600px;\">");
 
 		// -- Header row --
