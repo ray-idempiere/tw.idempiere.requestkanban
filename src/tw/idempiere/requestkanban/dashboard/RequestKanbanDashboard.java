@@ -1348,9 +1348,12 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 				String summaryTrunc = summary != null && summary.length() > 30
 					? summary.substring(0, 30) + "…" : (summary != null ? summary : "");
 				sb.append("<tr style=\"opacity:0.5;border-bottom:1px solid #f0f0f0;\">")
-				  .append("<td onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
+				  .append("<td draggable=\"true\"")
+				  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
+				  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
+				  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
 				  .append(" style=\"padding:6px 10px;border-right:1px solid #ddd;" +
-						  "font-size:11px;color:#333;cursor:pointer;\">")
+						  "font-size:11px;color:#333;cursor:grab;\">")
 				  .append("#").append(escHtml(docNo)).append(" — ").append(escHtml(summaryTrunc))
 				  .append("</td>")
 				  .append("<td colspan=\"").append(N).append("\"")
@@ -1379,8 +1382,11 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 			// Request name column
 			sb.append("<tr style=\"border-bottom:1px solid #f0f0f0;\">")
-			  .append("<td onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-			  .append(" style=\"padding:6px 10px;border-right:1px solid #ddd;cursor:pointer;\">")
+			  .append("<td draggable=\"true\"")
+			  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
+			  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
+			  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
+			  .append(" style=\"padding:6px 10px;border-right:1px solid #ddd;cursor:grab;\">")
 			  .append("<div style=\"font-weight:600;color:#333;font-size:11px;\">#")
 			  .append(escHtml(docNo)).append("</div>")
 			  .append("<div style=\"color:#888;font-size:10px;white-space:nowrap;overflow:hidden;" +
