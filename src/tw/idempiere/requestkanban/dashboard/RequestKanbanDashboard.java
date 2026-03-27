@@ -881,8 +881,10 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			"SELECT r.R_Request_ID, r.DocumentNo, r.Summary, r.Priority," +
 			" r.StartTime, r.EndTime, r.CloseDate, r.R_Status_ID," +
 			" (SELECT Name FROM AD_User WHERE AD_User_ID = r.SalesRep_ID) AS Responsible," +
-			" (SELECT Name FROM AD_User WHERE AD_User_ID = r.AD_User_ID)  AS Customer" +
+			" (SELECT Name FROM AD_User WHERE AD_User_ID = r.AD_User_ID)  AS Customer," +
+			" r.C_Project_ID, p.Name AS ProjectName" +
 			" FROM R_Request r" +
+			" LEFT JOIN C_Project p ON p.C_Project_ID = r.C_Project_ID" +
 			" WHERE r.StartDate IS NOT NULL" +
 			"   AND r.IsActive = 'Y'"
 		);
@@ -924,7 +926,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		// Date-range overlap filter
 		sql.append(" AND (r.StartTime IS NULL OR r.StartTime <= ?)")
 		   .append(" AND (r.EndTime   IS NULL OR r.EndTime   >= ?)")
-		   .append(" ORDER BY r.SalesRep_ID NULLS LAST," +
+		   .append(" ORDER BY r.C_Project_ID NULLS LAST," +
+		           " r.SalesRep_ID NULLS LAST," +
 		           " COALESCE(r.StartTime, '9999-01-01'::timestamp)");
 
 		PreparedStatement pstmt = DB.prepareStatement(sql.toString(), null);
