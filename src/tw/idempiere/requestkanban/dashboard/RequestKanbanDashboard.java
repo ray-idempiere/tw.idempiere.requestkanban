@@ -76,7 +76,6 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Grid;
-import org.zkoss.zul.Html;
 import org.zkoss.zul.Hlayout;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
@@ -149,7 +148,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 	private LocalDate ganttTo;
 	private Datebox ganttFromBox;
 	private Datebox ganttToBox;
-	private Html ganttHtml;
+	private Div ganttHtml;
 
 	// Project panel fields
 	private Html projectPanelHtml;
@@ -597,7 +596,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		contentArea.appendChild(projectPanel);
 
 		// -- Right: gantt html --
-		ganttHtml = new Html();
+		ganttHtml = new Div();
 		ganttHtml.setHflex("1");
 		ganttHtml.setVflex("1");
 		ganttHtml.setStyle("overflow: auto;");
@@ -674,28 +673,40 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			ResultSet[] result = loadGanttData(pstmtHolder);
 			if (result == null) {
 				// Scope returned no results (e.g., Subordinates with no subs)
-				ganttHtml.setContent(emptyStateHtml());
+				setGanttContent(emptyStateHtml());
 				adjustGanttHeight();
 				return;
 			}
 			rs = result[0];
 			if (!rs.next()) {
-				ganttHtml.setContent(emptyStateHtml());
+				setGanttContent(emptyStateHtml());
 				adjustGanttHeight();
 				return;
 			}
 			// rs is now positioned at first row — delegate to GanttRenderer
-			ganttHtml.setContent(
+			setGanttContent(
 				new GanttRenderer(Env.getCtx(), ganttFrom, ganttTo, ganttRange, currentScope, statuses)
 					.build(rs)
 			);
 			adjustGanttHeight();
 		} catch (Exception ex) {
-			ganttHtml.setContent("<div style=\"color:red;padding:20px;\">Error: "
+			setGanttContent("<div style=\"color:red;padding:20px;\">Error: "
 				+ escHtml(ex.getMessage()) + "</div>");
 		} finally {
 			DB.close(rs, pstmtHolder[0]);
 		}
+	}
+
+	/** Injects raw HTML into the ganttHtml Div via JavaScript innerHTML.
+	 *  Using innerHTML avoids ZK rendering the Html component as a &lt;span&gt;,
+	 *  which would cause block-level content (div, table) to be moved outside
+	 *  by the HTML parser, breaking overflow:auto scrolling. */
+	private void setGanttContent(String html) {
+		String uuid = ganttHtml.getUuid();
+		String escaped = html.replace("\\", "\\\\").replace("`", "\\`");
+		Clients.evalJavaScript(
+			"document.getElementById('" + uuid + "').innerHTML=`" + escaped + "`;"
+		);
 	}
 
 	/** Dynamically constrains ganttHtml height to the remaining viewport space
