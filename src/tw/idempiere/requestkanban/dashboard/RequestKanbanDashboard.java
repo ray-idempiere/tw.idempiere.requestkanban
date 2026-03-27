@@ -542,10 +542,21 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		projectPanel.setStyle("padding: 8px; border-right: 1px solid #ddd; " +
 		                      "background: #fafafa; overflow-y: auto; flex-shrink: 0;");
 
+		// Header row: label + collapse toggle button
+		Hlayout panelHeader = new Hlayout();
+		panelHeader.setValign("middle");
+		panelHeader.setStyle("display:flex; align-items:center;");
+
 		Label lblProjects = new Label(Msg.getMsg(Env.getCtx(), "RK_Projects"));
 		lblProjects.setStyle("font-size: 11px; font-weight: 700; color: #555; " +
-		                     "text-transform: uppercase; letter-spacing: 0.5px;");
-		projectPanel.appendChild(lblProjects);
+		                     "text-transform: uppercase; letter-spacing: 0.5px; flex:1;");
+		panelHeader.appendChild(lblProjects);
+
+		Button btnTogglePanel = new Button("◀");
+		btnTogglePanel.setStyle("min-width:18px; padding:0 3px; font-size:11px; " +
+		                        "border:none; background:transparent; cursor:pointer; color:#888;");
+		panelHeader.appendChild(btnTogglePanel);
+		projectPanel.appendChild(panelHeader);
 
 		projectPanelHtml = new Html();
 		projectPanelHtml.setHflex("1");
@@ -555,6 +566,29 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		btnNewProject.setStyle("width: 100%; font-size: 11px; margin-top: 4px;");
 		btnNewProject.addEventListener(Events.ON_CLICK, e -> openNewProjectDialog());
 		projectPanel.appendChild(btnNewProject);
+
+		// Toggle collapse/expand
+		final boolean[] panelExpanded = {true};
+		btnTogglePanel.addEventListener(Events.ON_CLICK, e -> {
+			panelExpanded[0] = !panelExpanded[0];
+			if (panelExpanded[0]) {
+				projectPanel.setWidth("200px");
+				projectPanel.setStyle("padding: 8px; border-right: 1px solid #ddd; " +
+				                      "background: #fafafa; overflow-y: auto; flex-shrink: 0;");
+				lblProjects.setVisible(true);
+				projectPanelHtml.setVisible(true);
+				btnNewProject.setVisible(true);
+				btnTogglePanel.setLabel("◀");
+			} else {
+				projectPanel.setWidth("24px");
+				projectPanel.setStyle("padding: 4px 2px; border-right: 1px solid #ddd; " +
+				                      "background: #fafafa; overflow-y: hidden; flex-shrink: 0;");
+				lblProjects.setVisible(false);
+				projectPanelHtml.setVisible(false);
+				btnNewProject.setVisible(false);
+				btnTogglePanel.setLabel("▶");
+			}
+		});
 
 		contentArea.appendChild(projectPanel);
 
