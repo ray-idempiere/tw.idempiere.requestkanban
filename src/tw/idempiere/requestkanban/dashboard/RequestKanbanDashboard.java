@@ -150,6 +150,11 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 	private Datebox ganttToBox;
 	private Html ganttHtml;
 
+	// Project panel fields
+	private Html projectPanelHtml;
+	private List<int[]> cachedProjects = new ArrayList<>();
+	private List<String> cachedProjectNames = new ArrayList<>();
+
 	private ServiceRegistration<EventHandler> m_reg;
 	private StatusConfig statusConfig = new StatusConfig("", "Processing,Open");
 
@@ -943,6 +948,65 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		if (s == null) return "";
 		return s.replace("&", "&amp;").replace("<", "&lt;")
 				 .replace(">", "&gt;").replace("\"", "&quot;");
+	}
+
+	/** Loads active C_Project records for the current client into cachedProjects / cachedProjectNames. */
+	private void loadProjectList() {
+		cachedProjects.clear();
+		cachedProjectNames.clear();
+		String sql = "SELECT C_Project_ID, Name FROM C_Project " +
+		             "WHERE AD_Client_ID = ? AND IsActive = 'Y' ORDER BY Name";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = DB.prepareStatement(sql, null);
+			pstmt.setInt(1, Env.getAD_Client_ID(Env.getCtx()));
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				cachedProjects.add(new int[]{ rs.getInt(1) });
+				cachedProjectNames.add(rs.getString(2));
+			}
+		} catch (Exception ex) {
+			logger.log(Level.WARNING, "loadProjectList failed", ex);
+		} finally {
+			DB.close(rs, pstmt);
+		}
+	}
+
+	/** Renders the left project list as an HTML fragment for projectPanelHtml. */
+	private String buildProjectPanelHtml() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div style=\"padding:4px 0;\">");
+		if (cachedProjects.isEmpty()) {
+			sb.append("<div style=\"color:#aaa;font-size:11px;padding:8px 10px;\">")
+			  .append(Msg.getMsg(Env.getCtx(), "RK_NoRequests"))
+			  .append("</div>");
+		} else {
+			for (int i = 0; i < cachedProjects.size(); i++) {
+				int projectId = cachedProjects.get(i)[0];
+				String name   = cachedProjectNames.get(i);
+				sb.append("<div")
+				  .append(" id=\"proj-").append(projectId).append("\"")
+				  .append(" ondragover=\"event.preventDefault();this.style.background='#dbeafe';\"")
+				  .append(" ondragleave=\"this.style.background='';\"")
+				  .append(" ondrop=\"event.preventDefault();this.style.background='';window._zkGanttDrop(event,").append(projectId).append(");\"")
+				  .append(" style=\"padding:6px 10px;font-size:12px;cursor:default;border-radius:4px;")
+				  .append("border:1px solid #e0e0e0;margin-bottom:4px;background:#fff;")
+				  .append("white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\"")
+				  .append(" title=\"").append(escHtml(name)).append("\">")
+				  .append("📁 ").append(escHtml(name))
+				  .append("</div>");
+			}
+		}
+		sb.append("</div>");
+		return sb.toString();
+	}
+
+	/** Reloads project list from DB and re-renders the left panel. */
+	private void refreshProjectPanel() {
+		if (projectPanelHtml == null) return;
+		loadProjectList();
+		projectPanelHtml.setContent(buildProjectPanelHtml());
 	}
 
 	private String buildGanttHtmlFromFirstRow(java.sql.ResultSet rs) throws java.sql.SQLException {
