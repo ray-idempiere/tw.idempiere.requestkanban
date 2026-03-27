@@ -40,6 +40,7 @@ import org.adempiere.webui.util.ServerPushTemplate;
 import org.compiere.model.MAttachment;
 import org.compiere.model.MColumn;
 import org.compiere.model.MLookup;
+import org.compiere.model.MProject;
 import org.compiere.model.MLookupFactory;
 import org.compiere.model.MQuery;
 import org.compiere.model.MRequest;
@@ -1087,6 +1088,102 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		}
 		refreshGantt();
 		refreshProjectPanel();
+	}
+
+	/** Opens a small modal dialog to create a new C_Project record. */
+	private void openNewProjectDialog() {
+		Window win = new Window();
+		win.setTitle(Msg.getMsg(Env.getCtx(), "RK_NewProject"));
+		win.setWidth("340px");
+		win.setBorder("normal");
+		win.setMode("modal");
+		win.setSizable(false);
+
+		Vlayout body = new Vlayout();
+		body.setSpacing("8px");
+		body.setStyle("padding: 12px;");
+		win.appendChild(body);
+
+		Grid grid = new Grid();
+		grid.setHflex("1");
+		Columns cols = new Columns();
+		Column c1 = new Column(); c1.setWidth("110px"); cols.appendChild(c1);
+		Column c2 = new Column(); cols.appendChild(c2);
+		grid.appendChild(cols);
+		Rows rows = new Rows();
+		grid.appendChild(rows);
+
+		// Name field
+		Textbox txtName = new Textbox();
+		txtName.setHflex("1");
+		txtName.setMaxlength(60);
+		addDialogRow(rows, Msg.getMsg(Env.getCtx(), "RK_ProjectName") + " *", txtName);
+
+		// Start date
+		Datebox dtStart = new Datebox();
+		dtStart.setFormat("yyyy-MM-dd");
+		dtStart.setWidth("120px");
+		addDialogRow(rows, Msg.getMsg(Env.getCtx(), "RK_ProjectStart"), dtStart);
+
+		// End date
+		Datebox dtEnd = new Datebox();
+		dtEnd.setFormat("yyyy-MM-dd");
+		dtEnd.setWidth("120px");
+		addDialogRow(rows, Msg.getMsg(Env.getCtx(), "RK_ProjectEnd"), dtEnd);
+
+		body.appendChild(grid);
+
+		// Buttons
+		Hlayout btns = new Hlayout();
+		btns.setSpacing("8px");
+		btns.setStyle("justify-content: flex-end; padding-top: 4px;");
+
+		Button btnSave = new Button(Msg.getMsg(Env.getCtx(), "RK_SaveAndClose"));
+		btnSave.setSclass("z-button");
+		btnSave.addEventListener(Events.ON_CLICK, ev -> {
+			String name = txtName.getValue() == null ? "" : txtName.getValue().trim();
+			if (name.length() < 2) {
+				Clients.showNotification(
+					Msg.getMsg(Env.getCtx(), "RK_ProjectNameMandatory"),
+					Clients.NOTIFICATION_TYPE_ERROR, txtName, "end_center", 3000);
+				return;
+			}
+			java.util.Date startVal = dtStart.getValue();
+			java.util.Date endVal   = dtEnd.getValue();
+			if (startVal != null && endVal != null && endVal.before(startVal)) {
+				Clients.showNotification(
+					"End date must be on or after start date",
+					Clients.NOTIFICATION_TYPE_ERROR, dtEnd, "end_center", 3000);
+				return;
+			}
+			try {
+				MProject proj = new MProject(Env.getCtx(), 0, null);
+				proj.setName(name);
+				if (startVal != null)
+					proj.setDateContract(new java.sql.Timestamp(startVal.getTime()));
+				if (endVal != null)
+					proj.setDateFinish(new java.sql.Timestamp(endVal.getTime()));
+				proj.saveEx();
+			} catch (Exception ex) {
+				logger.log(Level.WARNING, "openNewProjectDialog save failed", ex);
+				Clients.showNotification(
+					Msg.getMsg(Env.getCtx(), "RK_ProjectSaveError"),
+					Clients.NOTIFICATION_TYPE_ERROR, null, null, 3000);
+				return;
+			}
+			win.detach();
+			refreshProjectPanel();
+		});
+
+		Button btnCancel = new Button(Msg.getMsg(Env.getCtx(), "RK_Cancel"));
+		btnCancel.addEventListener(Events.ON_CLICK, ev -> win.detach());
+
+		btns.appendChild(btnSave);
+		btns.appendChild(btnCancel);
+		body.appendChild(btns);
+
+		win.setParent(root);
+		win.doModal();
 	}
 
 	private String buildGanttHtmlFromFirstRow(java.sql.ResultSet rs) throws java.sql.SQLException {
