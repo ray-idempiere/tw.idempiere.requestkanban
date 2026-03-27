@@ -331,6 +331,69 @@
         <field name="EntityType" type="String">U</field>
         <translation language="zh_TW"><field name="MsgText" type="String">顯示最終關閉</field></translation>
       </row>
+      <row>
+        <field name="Value" type="String">RK_Projects</field>
+        <field name="MsgText" type="String">Projects</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">專案</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_NewProject</field>
+        <field name="MsgText" type="String">+ New Project</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">+ 新增專案</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ProjectName</field>
+        <field name="MsgText" type="String">Project Name</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">專案名稱</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ProjectStart</field>
+        <field name="MsgText" type="String">Start Date</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">開始日期</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ProjectEnd</field>
+        <field name="MsgText" type="String">End Date</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">結束日期</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ProjectNameMandatory</field>
+        <field name="MsgText" type="String">Project name is required (min 2 chars)</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">專案名稱未填（至少 2 字）</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_ProjectSaveError</field>
+        <field name="MsgText" type="String">Failed to save project</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">專案存檔失敗</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_NoProjects</field>
+        <field name="MsgText" type="String">No projects yet</field>
+        <field name="MsgType" type="String">I</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">尚無專案</field></translation>
+      </row>
+      <row>
+        <field name="Value" type="String">RK_RequestNotFound</field>
+        <field name="MsgText" type="String">Request not found</field>
+        <field name="MsgType" type="String">E</field>
+        <field name="EntityType" type="String">U</field>
+        <translation language="zh_TW"><field name="MsgText" type="String">找不到此請求</field></translation>
+      </row>
     </table>
   </package>
 </adempierePackage>
