@@ -427,6 +427,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			}
 			resolveGanttRange();
 			refreshGantt();
+			refreshProjectPanel();
 		} else if (currentView.equals(VIEW_GANTT)) {
 			// Gantt → List
 			currentView = VIEW_LIST;
