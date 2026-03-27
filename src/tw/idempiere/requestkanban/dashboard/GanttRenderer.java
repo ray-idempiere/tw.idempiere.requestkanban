@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.compiere.model.MStatus;
-import org.compiere.util.Env;
 import org.compiere.util.Msg;
 
 /**
@@ -137,12 +136,13 @@ class GanttRenderer {
 		          "box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -2px 0 #fed7aa;\">")
 		  .append(Msg.getMsg(ctx, "DocumentNo"))
 		  .append("</th>");
-		for (LocalDate col : cols) {
+		for (int ci = 0; ci < cols.size(); ci++) {
+			LocalDate col = cols.get(ci);
 			boolean isToday = "day".equals(colUnit)
 				? col.equals(today)
 				: (!col.isAfter(today) &&
-				   (cols.indexOf(col) == cols.size() - 1 ||
-				    cols.get(cols.indexOf(col) + 1).isAfter(today)));
+				   (ci == cols.size() - 1 ||
+				    cols.get(ci + 1).isAfter(today)));
 			String thStyle = "padding:6px 4px;text-align:center;color:#9ca3af;font-weight:500;min-width:52px;" +
 				"box-shadow:inset -1px 0 0 #f3f4f6,inset 0 -2px 0 #fed7aa;" +
 				(isToday ? "background:#fff7ed;color:#f97316;font-weight:700;" : "");
@@ -224,7 +224,7 @@ class GanttRenderer {
 				  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 				  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 				  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-				  .append(" style=\"position:sticky;left:0;z-index:1;background:#fff;padding:7px 12px;" +
+				  .append(" style=\"position:sticky;left:0;z-index:1;background:inherit;padding:7px 12px;" +
 				          "font-size:11px;color:#374151;cursor:grab;" +
 				          "box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
 				  .append("#").append(esc(docNo)).append(" — ").append(esc(summaryTrunc))
@@ -260,7 +260,7 @@ class GanttRenderer {
 			  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 			  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 			  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-			  .append(" style=\"position:sticky;left:0;z-index:1;background:#fff;padding:7px 12px;" +
+			  .append(" style=\"position:sticky;left:0;z-index:1;background:inherit;padding:7px 12px;" +
 			          "cursor:grab;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
 			  .append("<div style=\"font-weight:600;color:#111827;font-size:11px;\">#")
 			  .append(esc(docNo)).append("</div>")
