@@ -48,18 +48,18 @@ FROM (VALUES
     ('RK_ThisMonth', 'This Month', 'I'),
     ('RK_ThisQuarter', 'This Quarter', 'I'),
     ('RK_NoDateSet', 'No date set', 'I'),
-    ('RK_Unassigned', '(未分配)', 'I'),
+    ('RK_Unassigned', '(Unassigned)', 'I'),
     ('RK_InvalidDateRange', 'Start date must be before end date', 'E'),
-    ('RK_DisplayFinalClose', 'Display Final Close', 'I'),
-    ('RK_Projects',              '專案',                   'I'),
-    ('RK_NewProject',            '+ 新增專案',              'I'),
-    ('RK_ProjectName',           '專案名稱',                'I'),
-    ('RK_ProjectStart',          '開始日期',                'I'),
-    ('RK_ProjectEnd',            '結束日期',                'I'),
+    ('RK_DisplayFinalClose', 'Display Finalized', 'I'),
+    ('RK_Projects',              'Projects',                'I'),
+    ('RK_NewProject',            '+ New Project',           'I'),
+    ('RK_ProjectName',           'Project Name',            'I'),
+    ('RK_ProjectStart',          'Start Date',              'I'),
+    ('RK_ProjectEnd',            'End Date',                'I'),
     ('RK_ProjectNameMandatory',  'Project name is required', 'E'),
     ('RK_ProjectSaveError',      'Failed to save project',   'E'),
-    ('RK_NoProjects',            '(尚無專案)',                 'I'),
-    ('RK_RequestNotFound',       'Request not found',         'E')
+    ('RK_NoProjects',            '(No projects)',            'I'),
+    ('RK_RequestNotFound',       'Request not found',        'E')
 ) AS v(val, msg, type);
 
 INSERT INTO AD_Message_Trl (AD_Message_ID, AD_Language, AD_Client_ID, AD_Org_ID, IsActive, Created, CreatedBy, Updated, UpdatedBy, MsgText, MsgTip, IsTranslated)
@@ -117,9 +117,9 @@ SELECT AD_Message_ID, 'zh_TW', 0, 0, 'Y', now(), 100, now(), 100,
         WHEN 'RK_ProjectName' THEN '專案名稱'
         WHEN 'RK_ProjectStart' THEN '開始日期'
         WHEN 'RK_ProjectEnd' THEN '結束日期'
-        WHEN 'RK_ProjectNameMandatory' THEN 'Project name is required'
-        WHEN 'RK_ProjectSaveError' THEN 'Failed to save project'
+        WHEN 'RK_ProjectNameMandatory' THEN '專案名稱必填'
+        WHEN 'RK_ProjectSaveError' THEN '專案儲存失敗'
         WHEN 'RK_NoProjects' THEN '(尚無專案)'
-        WHEN 'RK_RequestNotFound' THEN 'Request not found'
+        WHEN 'RK_RequestNotFound' THEN '找不到請求'
     END, NULL, 'Y'
 FROM AD_Message WHERE Value LIKE 'RK_%';
