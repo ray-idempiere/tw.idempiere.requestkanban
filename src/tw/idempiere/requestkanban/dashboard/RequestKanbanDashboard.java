@@ -1054,6 +1054,41 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		projectPanelHtml.setContent(buildProjectPanelHtml());
 	}
 
+	/** Handles drag-drop of a Gantt request bar onto a project in the left panel. */
+	@SuppressWarnings("unchecked")
+	private void onGanttDropHandler(Event e) {
+		java.util.Map<String, Object> data;
+		try {
+			data = (java.util.Map<String, Object>) e.getData();
+		} catch (ClassCastException ex) {
+			logger.log(Level.WARNING, "onGanttDrop: unexpected event data type", ex);
+			return;
+		}
+		int requestId, projectId;
+		try {
+			requestId = Integer.parseInt(String.valueOf(data.get("requestId")));
+			projectId = Integer.parseInt(String.valueOf(data.get("projectId")));
+		} catch (NumberFormatException ex) {
+			logger.log(Level.WARNING, "onGanttDrop: bad IDs in event data: " + data, ex);
+			return;
+		}
+
+		MRequest req = new MRequest(Env.getCtx(), requestId, null);
+		if (req.getR_Request_ID() == 0) {
+			Clients.showNotification("Request not found", Clients.NOTIFICATION_TYPE_WARNING,
+				null, null, 3000);
+			return;
+		}
+		req.set_Value("C_Project_ID", projectId);
+		if (!req.save()) {
+			Clients.showNotification(Msg.getMsg(Env.getCtx(), "RK_SaveError"),
+				Clients.NOTIFICATION_TYPE_ERROR, null, null, 3000);
+			return;
+		}
+		refreshGantt();
+		refreshProjectPanel();
+	}
+
 	private String buildGanttHtmlFromFirstRow(java.sql.ResultSet rs) throws java.sql.SQLException {
 		// ── Determine column granularity ──────────────────────────────
 		long spanDays = ChronoUnit.DAYS.between(ganttFrom, ganttTo) + 1;
