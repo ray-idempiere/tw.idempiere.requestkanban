@@ -158,6 +158,7 @@ class GanttRenderer {
 		boolean teamMode = !"Private".equals(scope);
 		String lastResponsible = null;
 		int lastProjectId = Integer.MIN_VALUE;
+		int myId = Integer.parseInt(ctx.getProperty("#AD_User_ID", "0"));
 
 		do {
 			int    requestId  = rs.getInt("R_Request_ID");
@@ -172,6 +173,8 @@ class GanttRenderer {
 				endTs = new java.sql.Timestamp(closeDate.getTime());
 			String responsible = rs.getString("Responsible");
 			String customer    = rs.getString("Customer");
+			int    requesterId = rs.getInt("RequesterID");
+			boolean isMyRow    = (myId != 0 && requesterId == myId);
 			int    projectId   = rs.getInt("C_Project_ID");
 			boolean hasProject = !rs.wasNull();
 			String projectName = rs.getString("ProjectName");
@@ -219,14 +222,16 @@ class GanttRenderer {
 			if (startTs == null && endTs == null) {
 				String summaryTrunc = summary != null && summary.length() > 30
 					? summary.substring(0, 30) + "…" : (summary != null ? summary : "");
+				String noDateTdStyle = "position:sticky;left:0;z-index:1;background:inherit;padding:7px 12px;" +
+					"font-size:11px;color:#374151;cursor:grab;" +
+					"box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;" +
+					(isMyRow ? "border-left:3px solid #2563eb;animation:rkBorderPulse 5s ease-in-out infinite;" : "");
 				sb.append("<tr style=\"opacity:0.5;\">")
 				  .append("<td draggable=\"true\"")
 				  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 				  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 				  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-				  .append(" style=\"position:sticky;left:0;z-index:1;background:inherit;padding:7px 12px;" +
-				          "font-size:11px;color:#374151;cursor:grab;" +
-				          "box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
+				  .append(" style=\"").append(noDateTdStyle).append("\">")
 				  .append("#").append(esc(docNo)).append(" — ").append(esc(summaryTrunc))
 				  .append("</td>")
 				  .append("<td colspan=\"").append(N).append("\"")
@@ -255,13 +260,15 @@ class GanttRenderer {
 			String   borderColor = priorityBorder(priority);
 
 			// Request name column
+			String barLeftTdStyle = "position:sticky;left:0;z-index:1;background:inherit;padding:7px 12px;" +
+				"cursor:grab;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;" +
+				(isMyRow ? "border-left:3px solid #2563eb;animation:rkBorderPulse 5s ease-in-out infinite;" : "");
 			sb.append("<tr>")
 			  .append("<td draggable=\"true\"")
 			  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 			  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 			  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-			  .append(" style=\"position:sticky;left:0;z-index:1;background:inherit;padding:7px 12px;" +
-			          "cursor:grab;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
+			  .append(" style=\"").append(barLeftTdStyle).append("\">")
 			  .append("<div style=\"font-weight:600;color:#111827;font-size:11px;\">#")
 			  .append(esc(docNo)).append("</div>")
 			  .append("<div style=\"color:#6b7280;font-size:10px;white-space:nowrap;overflow:hidden;" +

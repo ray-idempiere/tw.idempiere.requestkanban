@@ -978,7 +978,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			" r.StartTime, r.EndTime, r.CloseDate, r.R_Status_ID," +
 			" (SELECT Name FROM AD_User WHERE AD_User_ID = r.SalesRep_ID) AS Responsible," +
 			" (SELECT Name FROM AD_User WHERE AD_User_ID = r.AD_User_ID)  AS Customer," +
-			" r.C_Project_ID, p.Name AS ProjectName" +
+			" r.AD_User_ID AS RequesterID, r.C_Project_ID, p.Name AS ProjectName" +
 			" FROM R_Request r" +
 			" LEFT JOIN C_Project p ON p.C_Project_ID = r.C_Project_ID" +
 			" WHERE r.StartDate IS NOT NULL" +
