@@ -531,8 +531,9 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		// ── Content area: [project panel | gantt chart] ──────────────
 		Hlayout contentArea = new Hlayout();
 		contentArea.setHflex("1");
+		contentArea.setVflex("1");
 		contentArea.setSpacing("0");
-		contentArea.setStyle("flex: 1 1 0; min-height: 0; overflow: hidden;");
+		contentArea.setStyle("overflow: hidden;");
 
 		// -- Left: project panel --
 		Vlayout projectPanel = new Vlayout();
@@ -598,7 +599,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		// -- Right: gantt html --
 		ganttHtml = new Html();
 		ganttHtml.setHflex("1");
-		ganttHtml.setStyle("flex: 1 1 0; min-height: 0; overflow: hidden; position: relative;");
+		ganttHtml.setVflex("1");
+		ganttHtml.setStyle("overflow: hidden; position: relative;");
 		contentArea.appendChild(ganttHtml);
 
 		ganttLayout.appendChild(contentArea);
