@@ -288,7 +288,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		ganttLayout = new Div();
 		ganttLayout.setHflex("1");
 		ganttLayout.setVflex("1");
-		ganttLayout.setStyle("overflow: auto;");
+		ganttLayout.setStyle("display:flex;flex-direction:column;overflow:hidden;");
 		ganttLayout.setVisible(false);
 		root.appendChild(ganttLayout);
 
@@ -475,7 +475,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		Hlayout rangeBar = new Hlayout();
 		rangeBar.setValign("middle");
 		rangeBar.setSpacing("6px");
-		rangeBar.setStyle("padding: 8px 12px; background: #f8f9fa; border-bottom: 1px solid #ddd; flex-wrap: wrap;");
+		rangeBar.setStyle("padding: 8px 12px; background: #f8f9fa; border-bottom: 1px solid #ddd; flex-wrap: wrap; flex-shrink: 0;");
 
 		String[][] rangeDefs = {
 			{"week",    "RK_ThisWeek"},
@@ -531,9 +531,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		// ── Content area: [project panel | gantt chart] ──────────────
 		Hlayout contentArea = new Hlayout();
 		contentArea.setHflex("1");
-		contentArea.setVflex("1");
 		contentArea.setSpacing("0");
-		contentArea.setStyle("overflow: hidden;");
+		contentArea.setStyle("flex: 1 1 0; min-height: 0; overflow: hidden;");
 
 		// -- Left: project panel --
 		Vlayout projectPanel = new Vlayout();
@@ -599,8 +598,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		// -- Right: gantt html --
 		ganttHtml = new Html();
 		ganttHtml.setHflex("1");
-		ganttHtml.setVflex("1");
-		ganttHtml.setStyle("overflow: hidden;");
+		ganttHtml.setStyle("flex: 1 1 0; min-height: 0; overflow: hidden; position: relative;");
 		contentArea.appendChild(ganttHtml);
 
 		ganttLayout.appendChild(contentArea);
@@ -1273,7 +1271,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		// ── HTML assembly ─────────────────────────────────────────────
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div style=\"overflow:auto;height:100%;width:100%;box-sizing:border-box;\">");
+		sb.append("<div style=\"position:absolute;inset:0;overflow:auto;\">");
 		sb.append("<table style=\"width:100%;border-collapse:collapse;font-size:11px;min-width:600px;\">");
 
 		// -- Header row --
