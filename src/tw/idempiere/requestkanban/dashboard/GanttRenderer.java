@@ -127,12 +127,12 @@ class GanttRenderer {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div style=\"min-width:600px;\">");
-		sb.append("<table style=\"width:100%;border-collapse:collapse;font-size:11px;min-width:600px;\">");
+		sb.append("<table style=\"width:100%;border-collapse:separate;border-spacing:0;font-size:11px;min-width:600px;\">");
 
 		// -- Header row --
-		sb.append("<thead><tr style=\"background:#f4f5f7;border-bottom:2px solid #ddd;\">");
-		sb.append("<th style=\"width:160px;padding:6px 10px;text-align:left;color:#555;" +
-		          "font-weight:600;border-right:1px solid #ddd;\">")
+		sb.append("<thead><tr style=\"background:#fff7ed;\">");
+		sb.append("<th style=\"width:160px;padding:8px 12px;text-align:left;color:#374151;" +
+		          "font-weight:700;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -2px 0 #fed7aa;\">")
 		  .append(Msg.getMsg(ctx, "DocumentNo"))
 		  .append("</th>");
 		for (LocalDate col : cols) {
@@ -141,12 +141,12 @@ class GanttRenderer {
 				: (!col.isAfter(today) &&
 				   (cols.indexOf(col) == cols.size() - 1 ||
 				    cols.get(cols.indexOf(col) + 1).isAfter(today)));
-			String thStyle = "padding:4px;text-align:center;color:#888;font-weight:500;" +
-				"border-right:1px solid #eee;" +
-				(isToday ? "background:#fff3cd;" : "");
+			String thStyle = "padding:6px 4px;text-align:center;color:#9ca3af;font-weight:500;min-width:52px;" +
+				"box-shadow:inset -1px 0 0 #f3f4f6,inset 0 -2px 0 #fed7aa;" +
+				(isToday ? "background:#fff7ed;color:#f97316;font-weight:700;" : "");
 			sb.append("<th style=\"").append(thStyle).append("\">");
 			sb.append(col.getMonthValue()).append("/").append(col.getDayOfMonth());
-			if (isToday) sb.append(" ◀今");
+			if (isToday) sb.append(" ▼今");
 			sb.append("</th>");
 		}
 		sb.append("</tr></thead>");
@@ -182,13 +182,17 @@ class GanttRenderer {
 				String groupLabel = hasProject
 					? "📁 " + esc(projectName)
 					: Msg.getMsg(ctx, "RK_Unassigned");
-				String groupStyle = hasProject
-					? "background:#f0f4ff;color:#1a3a6e;"
-					: "background:#f5f5f5;color:#888;font-style:italic;";
-				sb.append("<tr style=\"").append(groupStyle).append("\">")
+				String groupBg    = hasProject ? "#fff7ed" : "#f9fafb";
+				String groupColor = hasProject ? "#92400e" : "#9ca3af";
+				String groupBorder = hasProject
+					? "box-shadow:inset 3px 0 0 #f97316,inset 0 -1px 0 #fed7aa;"
+					: "box-shadow:inset 3px 0 0 #d1d5db,inset 0 -1px 0 #e5e7eb;";
+				String groupStyle = hasProject ? "font-style:normal;" : "font-style:italic;";
+				sb.append("<tr>")
 				  .append("<td colspan=\"").append(totalCols).append("\"")
-				  .append(" style=\"font-weight:600;padding:5px 10px;font-size:11px;")
-				  .append("border-bottom:1px solid #c8d8ff;\">")
+				  .append(" style=\"font-weight:700;padding:5px 12px;font-size:11px;")
+				  .append("background:").append(groupBg).append(";color:").append(groupColor).append(";")
+				  .append(groupBorder).append(groupStyle).append("\">")
 				  .append(groupLabel)
 				  .append("</td></tr>");
 			}
@@ -200,9 +204,10 @@ class GanttRenderer {
 					lastResponsible = respKey;
 					String dispName = responsible != null && !responsible.isEmpty()
 						? responsible : Msg.getMsg(ctx, "RK_Unassigned");
-					sb.append("<tr style=\"background:#f0f4ff;\">")
+					sb.append("<tr style=\"background:#f0f9ff;\">")
 					  .append("<td colspan=\"").append(totalCols).append("\"")
-					  .append(" style=\"padding:5px 10px;font-size:11px;font-weight:700;color:#0052cc;\">")
+					  .append(" style=\"padding:4px 12px;font-size:11px;font-weight:600;color:#0369a1;" +
+					          "box-shadow:inset 0 -1px 0 #e0f2fe;\">")
 					  .append("👤 ").append(esc(dispName))
 					  .append("</td></tr>");
 				}
@@ -212,16 +217,18 @@ class GanttRenderer {
 			if (startTs == null && endTs == null) {
 				String summaryTrunc = summary != null && summary.length() > 30
 					? summary.substring(0, 30) + "…" : (summary != null ? summary : "");
-				sb.append("<tr style=\"opacity:0.5;border-bottom:1px solid #f0f0f0;\">")
+				sb.append("<tr style=\"opacity:0.5;\">")
 				  .append("<td draggable=\"true\"")
 				  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 				  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 				  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-				  .append(" style=\"padding:6px 10px;border-right:1px solid #ddd;font-size:11px;color:#333;cursor:grab;\">")
+				  .append(" style=\"padding:7px 12px;font-size:11px;color:#374151;cursor:grab;" +
+				          "box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
 				  .append("#").append(esc(docNo)).append(" — ").append(esc(summaryTrunc))
 				  .append("</td>")
 				  .append("<td colspan=\"").append(N).append("\"")
-				  .append(" style=\"padding:4px 10px;color:#aaa;font-size:10px;font-style:italic;\">")
+				  .append(" style=\"padding:7px 10px;color:#9ca3af;font-size:10px;font-style:italic;" +
+				          "box-shadow:inset 0 -1px 0 #f3f4f6;\">")
 				  .append("— ").append(Msg.getMsg(ctx, "RK_NoDateSet"))
 				  .append("</td></tr>");
 				continue;
@@ -245,15 +252,15 @@ class GanttRenderer {
 			String   borderColor = priorityBorder(priority);
 
 			// Request name column
-			sb.append("<tr style=\"border-bottom:1px solid #f0f0f0;\">")
+			sb.append("<tr>")
 			  .append("<td draggable=\"true\"")
 			  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 			  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
 			  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
-			  .append(" style=\"padding:6px 10px;border-right:1px solid #ddd;cursor:grab;\">")
-			  .append("<div style=\"font-weight:600;color:#333;font-size:11px;\">#")
+			  .append(" style=\"padding:7px 12px;cursor:grab;box-shadow:inset -1px 0 0 #e5e7eb,inset 0 -1px 0 #f3f4f6;\">")
+			  .append("<div style=\"font-weight:600;color:#111827;font-size:11px;\">#")
 			  .append(esc(docNo)).append("</div>")
-			  .append("<div style=\"color:#888;font-size:10px;white-space:nowrap;overflow:hidden;" +
+			  .append("<div style=\"color:#6b7280;font-size:10px;white-space:nowrap;overflow:hidden;" +
 			          "text-overflow:ellipsis;max-width:140px;\">")
 			  .append(esc(summary != null ? summary : ""))
 			  .append("</div></td>");
@@ -272,7 +279,7 @@ class GanttRenderer {
 
 			// Bar column
 			sb.append("<td colspan=\"").append(N).append("\"")
-			  .append(" style=\"padding:3px 2px;position:relative;height:32px;\">")
+			  .append(" style=\"padding:3px 2px;position:relative;height:38px;box-shadow:inset 0 -1px 0 #f3f4f6;\">")
 			  .append("<div draggable=\"true\"")
 			  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
 			  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
@@ -284,9 +291,10 @@ class GanttRenderer {
 			  .append("width:").append(String.format("%.2f", widthPct)).append("%;")
 			  .append("background:").append(bg).append(";")
 			  .append("border-left:4px solid ").append(borderColor).append(";")
-			  .append("height:22px;border-radius:0 3px 3px 0;")
-			  .append("display:flex;align-items:center;padding:0 6px;")
-			  .append("cursor:pointer;font-size:10px;color:").append(textColor).append(";")
+			  .append("height:22px;border-radius:6px;")
+			  .append("box-shadow:0 2px 4px rgba(0,0,0,.18);")
+			  .append("display:flex;align-items:center;padding:0 8px;")
+			  .append("cursor:pointer;font-size:9px;font-weight:500;color:").append(textColor).append(";")
 			  .append("white-space:nowrap;overflow:hidden;\">")
 			  .append(barLabel)
 			  .append("</div></td></tr>");
@@ -296,12 +304,12 @@ class GanttRenderer {
 		sb.append("</tbody></table>");
 
 		// -- Legend --
-		sb.append("<div style=\"padding:8px 12px;border-top:1px solid #eee;" +
-		          "display:flex;gap:16px;flex-wrap:wrap;font-size:10px;color:#555;\">");
-		sb.append("<strong style=\"color:#444;\">狀態底色：</strong>");
+		sb.append("<div style=\"padding:8px 12px;border-top:1px solid #e5e7eb;background:#fafaf8;" +
+		          "display:flex;gap:14px;flex-wrap:wrap;font-size:10px;color:#6b7280;\">")
+		  .append("<strong style=\"color:#374151;\">狀態底色：</strong>");
 		String[][] statusLegend = {
-			{"#deebff", "Open"}, {"#fffae6", "Processing"}, {"#e3fcef", "Verify"},
-			{"#ffebe6", "Problem"}, {"#dfe1e6", "Closed"}
+			{"#3b82f6", "Open"}, {"#f59e0b", "Processing"}, {"#10b981", "Verify"},
+			{"#ef4444", "Problem"}, {"#9ca3af", "Closed"}
 		};
 		for (String[] sl : statusLegend) {
 			sb.append("<span><span style=\"display:inline-block;width:12px;height:12px;" +
@@ -313,7 +321,7 @@ class GanttRenderer {
 		sb.append("<span style=\"margin-left:12px;\">")
 		  .append("<strong style=\"color:#444;\">左邊框 = 優先權</strong></span>");
 		String[][] priorityLegend = {
-			{"#bf2600", "Urgent"}, {"#ff8b00", "High"}, {"#ffe380", "Medium"}, {"#36b37e", "Low"}
+			{"#dc2626", "Urgent"}, {"#f97316", "High"}, {"#fbbf24", "Medium"}, {"#34d399", "Low"}
 		};
 		for (String[] pl : priorityLegend) {
 			sb.append("<span><span style=\"display:inline-block;width:4px;height:12px;" +
