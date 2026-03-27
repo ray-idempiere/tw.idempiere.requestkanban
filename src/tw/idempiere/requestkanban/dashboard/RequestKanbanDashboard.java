@@ -1027,32 +1027,6 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		return new ResultSet[]{ pstmt.executeQuery() };
 	}
 
-	/** Returns [backgroundHex, textHex] for a given R_Status_ID. */
-	private String[] getGanttBarColors(int statusId) {
-		for (MStatus s : statuses) {
-			if (s.getR_Status_ID() == statusId) {
-				switch (s.getValue()) {
-					case "Open":       return new String[]{"#deebff", "#0747a6"};
-					case "Processing": return new String[]{"#fffae6", "#7a4500"};
-					case "Verify":     return new String[]{"#e3fcef", "#006644"};
-					case "Problem":    return new String[]{"#ffebe6", "#bf2600"};
-					case "Closed":     return new String[]{"#dfe1e6", "#555"};
-					default:           return new String[]{"#dfe1e6", "#555"};
-				}
-			}
-		}
-		// Status not in the non-final-close list — treat as final closed (dark gray)
-		return new String[]{"#c4c9d4", "#333"};
-	}
-
-	/** Returns the left-border color hex for the given priority string. */
-	private String getGanttPriorityBorder(String priority) {
-		if ("1".equals(priority)) return "#bf2600"; // Urgent
-		if ("2".equals(priority)) return "#ff8b00"; // High
-		if ("3".equals(priority)) return "#ffe380"; // Medium
-		return "#36b37e";                           // Low / other
-	}
-
 	private String emptyStateHtml() {
 		return "<div style=\"display:flex;align-items:center;justify-content:center;" +
 			   "min-height:120px;color:#aaa;font-size:13px;\">" +
@@ -1413,10 +1387,25 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 				Math.min(100.0 - leftPct,
 					(ChronoUnit.DAYS.between(startDate, endDate) + 1) * 100.0 / totalDays));
 
-			String[] colors    = getGanttBarColors(statusId);
+			// TODO(Task 2): delegate to GanttRenderer — inline fallback until then
+			String[] colors = new String[]{"#dfe1e6", "#555"};
+			for (MStatus s : statuses) {
+				if (s.getR_Status_ID() == statusId) {
+					switch (s.getValue()) {
+						case "Open":       colors = new String[]{"#deebff", "#0747a6"}; break;
+						case "Processing": colors = new String[]{"#fffae6", "#7a4500"}; break;
+						case "Verify":     colors = new String[]{"#e3fcef", "#006644"}; break;
+						case "Problem":    colors = new String[]{"#ffebe6", "#bf2600"}; break;
+						default:           colors = new String[]{"#dfe1e6", "#555"};    break;
+					}
+					break;
+				}
+			}
 			String bg          = colors[0];
 			String textColor   = colors[1];
-			String borderColor = getGanttPriorityBorder(priority);
+			String borderColor = "1".equals(priority) ? "#bf2600"
+			                   : "2".equals(priority) ? "#ff8b00"
+			                   : "3".equals(priority) ? "#ffe380" : "#36b37e";
 
 			// Request name column
 			sb.append("<tr style=\"border-bottom:1px solid #f0f0f0;\">")
