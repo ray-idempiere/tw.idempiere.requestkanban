@@ -1289,7 +1289,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		card.setSpacing("5px");
 		String cardStyle = "padding: 10px; border-radius: 8px; background-color: " + getPriorityColor(priority) + "; cursor: pointer; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);";
 		if (isMyRequest) {
-			cardStyle += " border-left: 3px solid #2563eb; animation: rkBorderPulse 2s ease-in-out infinite;";
+			cardStyle += " border-left: 3px solid #2563eb; animation: rkBorderPulse 5s ease-in-out infinite;";
 		} else {
 			cardStyle += " border: 1px solid #ddd;";
 		}
