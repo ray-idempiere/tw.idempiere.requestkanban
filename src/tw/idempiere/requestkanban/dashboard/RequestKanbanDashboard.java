@@ -288,7 +288,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		ganttLayout = new Div();
 		ganttLayout.setHflex("1");
 		ganttLayout.setVflex("1");
-		ganttLayout.setStyle("display:flex;flex-direction:column;overflow:hidden;");
+		ganttLayout.setStyle("overflow:hidden;");
 		ganttLayout.setVisible(false);
 		root.appendChild(ganttLayout);
 
@@ -475,7 +475,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		Hlayout rangeBar = new Hlayout();
 		rangeBar.setValign("middle");
 		rangeBar.setSpacing("6px");
-		rangeBar.setStyle("padding: 8px 12px; background: #f8f9fa; border-bottom: 1px solid #ddd; flex-wrap: wrap; flex-shrink: 0;");
+		rangeBar.setStyle("padding: 8px 12px; background: #f8f9fa; border-bottom: 1px solid #ddd; flex-wrap: wrap;");
 
 		String[][] rangeDefs = {
 			{"week",    "RK_ThisWeek"},
