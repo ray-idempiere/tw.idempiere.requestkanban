@@ -1122,6 +1122,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		sb.append("<tbody>");
 		boolean teamMode = !"Private".equals(currentScope);
 		String lastResponsible = null;
+		int lastProjectId = Integer.MIN_VALUE; // sentinel — no group emitted yet
 
 		do {
 			int requestId   = rs.getInt("R_Request_ID");
@@ -1137,6 +1138,28 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 				endTs = new java.sql.Timestamp(closeDate.getTime());
 			String responsible = rs.getString("Responsible");
 			String customer    = rs.getString("Customer");
+			int projectId     = rs.getInt("C_Project_ID");
+			boolean hasProject = !rs.wasNull();
+			String projectName = rs.getString("ProjectName");
+
+			// ── Project group header ──────────────────────────────────
+			int groupKey = hasProject ? projectId : -1;
+			if (groupKey != lastProjectId) {
+				lastProjectId = groupKey;
+				lastResponsible = null; // reset responsible grouping within each project
+				String groupLabel = hasProject
+					? "📁 " + escHtml(projectName)
+					: Msg.getMsg(Env.getCtx(), "RK_Unassigned");
+				String groupStyle = hasProject
+					? "background:#f0f4ff;color:#1a3a6e;"
+					: "background:#f5f5f5;color:#888;font-style:italic;";
+				sb.append("<tr style=\"").append(groupStyle).append("\">")
+				  .append("<td colspan=\"").append(totalCols).append("\"")
+				  .append(" style=\"font-weight:600;padding:5px 10px;font-size:11px;")
+				  .append("border-bottom:1px solid #c8d8ff;\">")
+				  .append(groupLabel)
+				  .append("</td></tr>");
+			}
 
 			// Group header (team mode only)
 			if (teamMode) {
@@ -1211,7 +1234,10 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			// Bar column (spans all date columns)
 			sb.append("<td colspan=\"").append(N).append("\"")
 			  .append(" style=\"padding:3px 2px;position:relative;height:32px;\">")
-			  .append("<div onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
+			  .append("<div draggable=\"true\"")
+			  .append(" ondragstart=\"window._zkGanttDragging=").append(requestId)
+			  .append(";event.dataTransfer.setData('text/plain','").append(requestId).append("');\"")
+			  .append(" onclick=\"window._zkGanttClick(").append(requestId).append(")\"")
 			  .append(" title=\"#").append(escHtml(docNo)).append(": ")
 			  .append(escHtml(summary != null ? summary : "")).append("\"")
 			  .append(" style=\"position:absolute;")
