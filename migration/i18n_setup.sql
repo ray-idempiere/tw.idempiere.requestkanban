@@ -57,7 +57,8 @@ FROM (VALUES
     ('RK_ProjectStart',          '開始日期',                'I'),
     ('RK_ProjectEnd',            '結束日期',                'I'),
     ('RK_ProjectNameMandatory',  'Project name is required', 'E'),
-    ('RK_ProjectSaveError',      'Failed to save project',   'E')
+    ('RK_ProjectSaveError',      'Failed to save project',   'E'),
+    ('RK_NoProjects',            '(尚無專案)',                 'I')
 ) AS v(val, msg, type);
 
 INSERT INTO AD_Message_Trl (AD_Message_ID, AD_Language, AD_Client_ID, AD_Org_ID, IsActive, Created, CreatedBy, Updated, UpdatedBy, MsgText, MsgTip, IsTranslated)
@@ -117,5 +118,6 @@ SELECT AD_Message_ID, 'zh_TW', 0, 0, 'Y', now(), 100, now(), 100,
         WHEN 'RK_ProjectEnd' THEN '結束日期'
         WHEN 'RK_ProjectNameMandatory' THEN 'Project name is required'
         WHEN 'RK_ProjectSaveError' THEN 'Failed to save project'
+        WHEN 'RK_NoProjects' THEN '(尚無專案)'
     END, NULL, 'Y'
 FROM AD_Message WHERE Value LIKE 'RK_%';

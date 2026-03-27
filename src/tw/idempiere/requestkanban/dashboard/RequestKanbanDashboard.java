@@ -979,7 +979,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		sb.append("<div style=\"padding:4px 0;\">");
 		if (cachedProjects.isEmpty()) {
 			sb.append("<div style=\"color:#aaa;font-size:11px;padding:8px 10px;\">")
-			  .append(Msg.getMsg(Env.getCtx(), "RK_NoRequests"))
+			  .append(Msg.getMsg(Env.getCtx(), "RK_NoProjects"))
 			  .append("</div>");
 		} else {
 			for (int i = 0; i < cachedProjects.size(); i++) {
