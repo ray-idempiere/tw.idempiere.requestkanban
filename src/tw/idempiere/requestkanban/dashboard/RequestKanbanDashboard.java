@@ -1076,11 +1076,11 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		MRequest req = new MRequest(Env.getCtx(), requestId, null);
 		if (req.getR_Request_ID() == 0) {
-			Clients.showNotification("Request not found", Clients.NOTIFICATION_TYPE_WARNING,
+			Clients.showNotification(Msg.getMsg(Env.getCtx(), "RK_RequestNotFound"),
 				null, null, 3000);
 			return;
 		}
-		req.set_Value("C_Project_ID", projectId);
+		req.setC_Project_ID(projectId);
 		if (!req.save()) {
 			Clients.showNotification(Msg.getMsg(Env.getCtx(), "RK_SaveError"),
 				Clients.NOTIFICATION_TYPE_ERROR, null, null, 3000);
@@ -1152,7 +1152,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			java.util.Date endVal   = dtEnd.getValue();
 			if (startVal != null && endVal != null && endVal.before(startVal)) {
 				Clients.showNotification(
-					"End date must be on or after start date",
+					Msg.getMsg(Env.getCtx(), "RK_InvalidDateRange"),
 					Clients.NOTIFICATION_TYPE_ERROR, dtEnd, "end_center", 3000);
 				return;
 			}
@@ -1275,7 +1275,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			String projectName = rs.getString("ProjectName");
 
 			// ── Project group header ──────────────────────────────────
-			int groupKey = hasProject ? projectId : -1;
+			int groupKey = hasProject ? projectId : 0;
 			if (groupKey != lastProjectId) {
 				lastProjectId = groupKey;
 				lastResponsible = null; // reset responsible grouping within each project
