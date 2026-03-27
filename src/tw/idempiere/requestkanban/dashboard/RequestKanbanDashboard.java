@@ -1158,6 +1158,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			try {
 				MProject proj = new MProject(Env.getCtx(), 0, null);
 				proj.setName(name);
+				proj.setC_Currency_ID(Env.getContextAsInt(Env.getCtx(), "$C_Currency_ID"));
 				if (startVal != null)
 					proj.setDateContract(new java.sql.Timestamp(startVal.getTime()));
 				if (endVal != null)
