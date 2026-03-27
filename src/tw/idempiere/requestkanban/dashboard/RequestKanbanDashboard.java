@@ -612,11 +612,18 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			"  window._zkGanttDragging = null;" +
 			"  zAu.send(new zk.Event(zk.Widget.$('" + uuid + "'), 'onGanttDrop'," +
 			"    {requestId: reqId, projectId: projectId}));" +
+			"};" +
+			"window._zkGanttProjectDblClick = function(projectId) {" +
+			"  zAu.send(new zk.Event(zk.Widget.$('" + uuid + "'), 'onGanttProjectOpen', projectId));" +
 			"};"
 		);
 		ganttLayout.addEventListener("onGanttClick",
 			e -> openRequestUpdate((Integer) e.getData()));
 		ganttLayout.addEventListener("onGanttDrop", e -> onGanttDropHandler(e));
+		ganttLayout.addEventListener("onGanttProjectOpen", e -> {
+			int projectId = Integer.parseInt(String.valueOf(e.getData()));
+			AEnv.zoom(MProject.Table_ID, projectId);
+		});
 
 		ganttControlsInitialized = true;
 	}
@@ -1070,7 +1077,8 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 				  .append(" ondragover=\"event.preventDefault();this.style.background='#dbeafe';\"")
 				  .append(" ondragleave=\"this.style.background='';\"")
 				  .append(" ondrop=\"event.preventDefault();this.style.background='';window._zkGanttDrop(event,").append(projectId).append(");\"")
-				  .append(" style=\"padding:6px 10px;font-size:12px;cursor:default;border-radius:4px;")
+				  .append(" ondblclick=\"window._zkGanttProjectDblClick(").append(projectId).append(");\"")
+				  .append(" style=\"padding:6px 10px;font-size:12px;cursor:pointer;border-radius:4px;")
 				  .append("border:1px solid #e0e0e0;margin-bottom:4px;background:#fff;")
 				  .append("white-space:nowrap;overflow:hidden;text-overflow:ellipsis;\"")
 				  .append(" title=\"").append(escHtml(name)).append("\">")
