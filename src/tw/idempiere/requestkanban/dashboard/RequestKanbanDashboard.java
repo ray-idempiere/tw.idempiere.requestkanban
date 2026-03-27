@@ -1279,13 +1279,19 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 
 		Vlayout card = new Vlayout();
 		card.setSpacing("5px");
-		String cardStyle = "padding: 10px; border-radius: 8px; background-color: " + getPriorityColor(priority) + "; cursor: pointer; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);";
+		String cardStyle = "padding: 10px; border-radius: 8px; background-color: " + getPriorityColor(priority) + "; cursor: pointer; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: relative;";
 		if (isMyRequest) {
-			cardStyle += " border-left: 3px solid #2563eb; background-color: #eff6ff;";
+			cardStyle += " border-left: 3px solid #2563eb;";
 		} else {
 			cardStyle += " border: 1px solid #ddd;";
 		}
 		card.setStyle(cardStyle);
+
+		if (isMyRequest) {
+			Label badge = new Label("我");
+			badge.setStyle("position:absolute; top:6px; right:8px; background:#2563eb; color:#fff; border-radius:9px; padding:1px 6px; font-size:10px; font-weight:700; line-height:1.4;");
+			card.appendChild(badge);
+		}
 
 		Label lblSummary = new Label(summaryTxt);
 		lblSummary.setMultiline(true);
