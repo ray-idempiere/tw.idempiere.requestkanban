@@ -1070,7 +1070,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 		cachedProjects.clear();
 		cachedProjectNames.clear();
 		String sql = "SELECT C_Project_ID, Name FROM C_Project " +
-		             "WHERE AD_Client_ID = ? AND IsActive = 'Y' ORDER BY Name";
+		             "WHERE AD_Client_ID = ? AND IsActive = 'Y' AND IsSummary = 'Y' ORDER BY Name";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -1228,6 +1228,7 @@ public class RequestKanbanDashboard extends DashboardPanel implements EventListe
 			try {
 				MProject proj = new MProject(Env.getCtx(), 0, null);
 				proj.setName(name);
+				proj.setIsSummary(true);
 				proj.setC_Currency_ID(Env.getContextAsInt(Env.getCtx(), "$C_Currency_ID"));
 				if (startVal != null)
 					proj.setDateContract(new java.sql.Timestamp(startVal.getTime()));
