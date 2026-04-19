@@ -3,6 +3,14 @@
 
 ---
 
+> ## ⚠️ This project is no longer maintained.
+>
+> Development has moved to the **iDempiere MVVM Form** architecture.
+> Please visit the new repository:
+> **[tw.idempiere.requestkanbanform](https://github.com/ray-idempiere/tw.idempiere.requestkanbanform)**
+
+---
+
 ## 🌐 English
 
 > *In the beginning, there was iDempiere. And iDempiere had requests. Many, many requests. And lo, the people cried out: "Where did ticket #1002208 go?" And no one knew.*
@@ -123,6 +131,12 @@ GPL. Share and share alike.
 ---
 
 ## 🌐 中文版
+
+> ## ⚠️ 本專案已停止更新
+>
+> 開發已移轉至 **iDempiere MVVM Form** 架構進行維護。
+> 請前往新的代碼庫：
+> **[tw.idempiere.requestkanbanform](https://github.com/ray-idempiere/tw.idempiere.requestkanbanform)**
 
 > **太史公曰：** 自古請求如恆河之沙，數之不盡，管之不易。或藏於資料庫深處，或迷失於 Window 介面之汪洋，負責人曰「我不知道」，主管曰「怎麼又卡住了」，申請人曰「我上週就填了啊」。三者相望於江湖，皆不得要領。
 >
